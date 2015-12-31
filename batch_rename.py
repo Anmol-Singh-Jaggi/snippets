@@ -17,11 +17,11 @@ def main():
     file_name_list = [file_name for file_name in listdir(
         input_directory_path) if isfile(join(input_directory_path, file_name))]
     file_name_list.remove(sys.argv[0])
-    print file_name_list
+    print file_name_list, "\n\n"
 
     # Sort according to file-creation time
     sorted_file_name_list = sorted(file_name_list, key=getmtime)
-    print sorted_file_name_list
+    print sorted_file_name_list, "\n\n\n"
 
     index = 1
     for file_name in file_name_list:
