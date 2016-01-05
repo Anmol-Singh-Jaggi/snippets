@@ -43,5 +43,15 @@
         "path": "/home/anmol/auto-backup-temp/snapshot",
         "fileId": "0Bw239KLrN7zoaF9xc0VVVmdvVlk",
         "parentId": "0Bw239KLrN7zoZmxmd09RYTFJTkk"
+    },
+    {
+        "path": "/media/Data/anmol/Docs/To-do/To-do.txt",
+        "fileId": "",
+        "parentId": "0Bw239KLrN7zocDhXQmpVMjdwVFU"
+    },
+    {
+        "path": "/media/Data/anmol/Docs/To-do/To-do-soon.txt",
+        "fileId": "",
+        "parentId": "0Bw239KLrN7zocDhXQmpVMjdwVFU"
     }
 ]
