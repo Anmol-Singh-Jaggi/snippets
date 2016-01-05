@@ -1,7 +1,7 @@
 for i in `seq 1 3`;
 do
 	:
- #notify-send "Auto-backup started!!"
+ notify-send "Auto-backup started!!"
 done
 
 chmod +x ./custom_cmds_pre.sh
@@ -14,4 +14,4 @@ chmod +x ./upload.py
 chmod +x ./custom_cmds_post.sh
 ./custom_cmds_post.sh
 
-#notify-send "Auto-backup finished!!"
+notify-send "Auto-backup finished!!"
