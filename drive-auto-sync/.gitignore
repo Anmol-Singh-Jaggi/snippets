@@ -60,3 +60,4 @@ docs/_build/
 target/
 
 client_secret.json
+logs/
