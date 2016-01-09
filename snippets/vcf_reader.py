@@ -1,4 +1,5 @@
 import sys
+import json
 
 
 def extract_number(line):
@@ -45,13 +46,11 @@ def main():
             input_file_lines, input_file_lines_iterator)
         numbers, input_file_lines_iterator = get_next_numbers(
             input_file_lines, input_file_lines_iterator)
-        vcf_map.setdefault(name, []).extend(numbers)
+        vcf_map.setdefault(name.strip(), []).extend(numbers)
         input_file_lines_iterator += 1
 
-    vcf_map_sorted = sorted(vcf_map.items())
-    for name, numbers in vcf_map_sorted:
-        print name, numbers
-    print "\n----- " + str(len(vcf_map)) + " records -----\n"
+    print json.dumps(vcf_map, indent=2, sort_keys=True)
+
 
 if __name__ == '__main__':
     main()
