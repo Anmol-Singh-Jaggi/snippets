@@ -1,0 +1,33 @@
+Case #1: 1
+abcd.comabcd.comabcd.comabcd.comabcd.comabcd.comabcd.comabcd.com@gmail.com
+Case #2: 2
+svm11@gmail.com
+svm12@gmail.co.in
+Case #3: 1
+anmolj.65@gmail.com
+Case #4: 0
+Case #5: 0
+Case #6: 1
+anmolJ.65@gmail.com
+Case #7: 1
+olj.65@gmail.com
+Case #8: 1
+anmol_j.65.56@lol.com
+Case #9: 1
+anmol_j.65@gmail.com
+Case #10: 1
+anmolj.65@gmail.com
+Case #11: 0
+Case #12: 0
+Case #13: 1
+sasas@7.com
+Case #14: 1
+6anmolj.65@gmail.com
+Case #15: 1
+comanmolj.65@gmail.com
+Case #16: 0
+Case #17: 0
+Case #18: 3
+lolzz_helloanmolj.com.65@gmail.com
+anmolj.65@gmail.com
+lolzz@lol.co.in
