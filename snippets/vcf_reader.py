@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys
 import json
 
@@ -49,7 +51,7 @@ def main():
         vcf_map.setdefault(name.strip(), []).extend(numbers)
         input_file_lines_iterator += 1
 
-    print json.dumps(vcf_map, indent=2, sort_keys=True)
+    print(json.dumps(vcf_map, indent=2, sort_keys=True))
 
 
 if __name__ == '__main__':

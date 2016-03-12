@@ -24,6 +24,8 @@ Sample Output -:
     1.2.1.1.1) blah
 '''
 
+from __future__ import print_function
+
 
 def get_depth(line):
     i = 0
@@ -62,10 +64,10 @@ def process_file(file_handle, starting_index="0"):
             index = depth_right(index)
         elif curr_line_depth < prev_line_depth:
             diff = prev_line_depth - curr_line_depth
-            for i in xrange(diff):
+            for i in range(diff):
                 index = depth_left(index)
         index = increment(index)
-        print " " * curr_line_depth + index + ") " + line.strip()
+        print(" " * curr_line_depth + index + ") " + line.strip())
         prev_line_depth = curr_line_depth
 
 
