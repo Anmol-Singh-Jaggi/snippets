@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+	<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+	<head>
+                <meta http-equiv="X-UA-Compatible" content="IE=9"/> 
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta content="True" name="HandheldFriendly">
+		
+
+		<title>Finite State Machines and Regular Expressions - General Programming - Articles - Articles - GameDev.net</title>
+
+<meta name="Adtomatik-tag" content="MTQyMQ=="/>
+
+		<link rel="shortcut icon" href='http://www.gamedev.net/favicon.ico' />
+		<link rel="image_src" href='http://www.gamedev.net/uploads/a5cef4db2ceadbdbe26dda561e7b9fff.jpg' />
+		<script type='text/javascript'>
+		//<![CDATA[
+			jsDebug			= 0; /* Must come before JS includes */
+			USE_RTE			= 0;
+			DISABLE_AJAX	= parseInt(0); /* Disables ajax requests where text is sent to the DB; helpful for charset issues */
+			inACP			= false;
+			var isRTL		= false;
+			var rtlIe		= '';
+			var rtlFull		= '';
+		//]]>
+		</script>
+		
+	
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+<link rel="stylesheet" type="text/css" title="Main" media="print" href="http://www.gamedev.net/public/style_css/css_20/ipcontent_print.css?ipbv=3cba197f9fb9e69926cbb1d2b94ff8c0" />
+		
+	
+
+				
+	
+
+				
+	
+
+				
+	
+	
+		<link rel="stylesheet" type="text/css" media='screen,print' href="http://www.gamedev.net/public/min/index.php?ipbv=3cba197f9fb9e69926cbb1d2b94ff8c0&f=public/style_css/css_20/hub.css,public/style_css/css_20/gdshowcase.css,public/style_css/css_20/legacy.css,public/style_css/css_20/nexusAccountCredit.css,public/style_css/css_20/news.css,public/style_css/css_20/ipb_codetoolbar.css,public/style_css/css_20/gdnetsprite.css,public/style_css/css_20/shCoreDefault.css,public/style_css/css_20/ipb_styles.css,public/style_css/css_20/ipb_profile.css,public/style_css/css_20/ipdownloads.css,public/style_css/css_20/ipcontent.css,public/style_css/css_20/ipb_common.css,public/style_css/css_20/links.css,public/style_css/css_20/calendar_select.css,public/style_css/css_20/gdnet.css,public/style_css/css_20/responsive.css,public/style_css/prettify.css" />
+	
+
+
+<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" title='Main' media="screen" href="http://www.gamedev.net/public/style_css/css_20/ipb_ie.css" />
+<![endif]-->
+<!--[if lte IE 8]>
+	<style type='text/css'>
+		.ipb_table { table-layout: fixed; }
+		.ipsLayout_content { width: 99.5%; }
+	</style>
+<![endif]-->
+
+	<!-- Forces resized images to an admin-defined size -->
+	<style type='text/css'>
+		img.bbc_img {
+			max-width: 640px !important;
+			max-height: 640px !important;
+		}
+	</style>
+
+
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+		<meta property="og:title" content="Finite State Machines and Regular Expressions - General Programming - Articles - Articles"/>
+		<meta property="og:site_name" content="GameDev.net"/>
+		<meta property="og:type" content="article" />
+		
+	
+		
+		
+			<meta property="og:image" content="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-74344300-1370059504.png" />
+		
+		
+		
+		
+	
+
+		
+		
+			<meta name="description" content="IntroductionI want to present an important and interesting topic in computer science, the Finite State Machine (FSM). In this part we start with the basics, gaining an understanding of what FSMs are and what they can be used for. This part is v..." />
+		
+		
+		
+			<meta property="og:description" content="IntroductionI want to present an important and interesting topic in computer science, the Finite State Machine (FSM). In this part we start with the basics, gaining an understanding of what FSMs are and what they can be used for. This part is v..." />
+		
+		
+	
+
+		
+		
+			<meta name="keywords" content="Finite,State,Machines,Regular,Expressions,IntroductionI,want,present,important,interesting,topic,computer,science,Machine,FSM,part,start,basics" />
+		
+		
+		
+		
+	
+
+		
+		
+			<meta name="gdnet" content="game development, game, development, industry, games, gaming, gamer, make games, game programming, programming, game art, art, media, social gaming, game music, audio, design, publishing, publisher, publish, game books, graphics, gpu, networking, artificial intelligence, ai, physics, multiplayer, mmorpg, c++, lua, c, maya, 3dsmax, photoshop, visual studio, xna, windows, linux, xbox, ps3, wii" />
+		
+		
+		
+		
+	
+
+		
+		
+			<meta name="identifier-url" content="http://www.gamedev.net/page/resources/_/technical/general-programming/finite-state-machines-and-regular-expressions-r3176" />
+		
+		
+			<meta property="og:url" content="http://www.gamedev.net/page/resources/_/technical/general-programming/finite-state-machines-and-regular-expressions-r3176" />
+		
+		
+		
+	
+
+<meta property="og:image" content="http://www.gamedev.net/uploads/a5cef4db2ceadbdbe26dda561e7b9fff.jpg"/>
+		
+		
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no" />
+
+		
+<!-- All resources can be remote -->
+<script src="http://www.gamedev.net/public/js/3rd_party/syntaxhighlighter/scripts/shCore.js" type="text/javascript"></script>
+<script src="http://www.gamedev.net/public/js/3rd_party/syntaxhighlighter/scripts/shAutoloader.js" type="text/javascript"></script>
+
+<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+<script type='text/javascript'>
+
+var resizeTimer;
+
+  function GetWidth()
+  {
+          var x = 0;
+          if (self.innerHeight)
+          {
+                  x = self.innerWidth;
+          }
+          else if (document.documentElement && document.documentElement.clientHeight)
+          {
+                  x = document.documentElement.clientWidth;
+          }
+          else if (document.body)
+          {
+                  x = document.body.clientWidth;
+          }
+          return x;
+  }
+
+function resizer() {
+	googletag.pubads().refresh([window.Leaderslot]);
+}
+
+window.addEventListener("resize", function(){ 
+	clearTimeout(resizeTimer);
+	resizeTimer = setTimeout(resizer, 250);
+});
+
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') +
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+
+googletag.cmd.push(function() {
+
+var mapLeader = googletag.sizeMapping().
+		addSize([320, 200], [320, 50]).
+		addSize([640, 200], [468, 60]).
+		addSize([980, 200], [728, 90]).
+/*addSize([1000, 200], [970,90]).*/
+		build();
+
+
+
+
+window.Leaderslot = googletag.defineSlot('/1004699/Leaderboard_Main', [[320, 50], [468, 60], [728, 90], [970, 90]], 'div-gpt-ad-1410074947216-0').defineSizeMapping(mapLeader).addService(googletag.pubads());
+
+var client_width = GetWidth();
+
+if (client_width > 960)
+{
+
+
+googletag.defineSlot('/1004699/Box_Main', [300, 250], 'div-gpt-ad-1412653010761-0').addService(googletag.pubads());
+
+<!-- && Array['id'] == '6'-->
+    googletag.defineSlot('/1004699/Spotlight_Main', [250, 250], 'div-gpt-ad-1439398297592-0').addService(googletag.pubads());
+
+}
+
+
+    googletag.defineSlot('/1004699/Topper_Main', [1, 1], 'div-gpt-ad-1439397124210-1').addService(googletag.pubads());
+
+
+
+
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</script><script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/prototype/1.7/prototype.js'></script>
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8/scriptaculous.js?load=effects,dragdrop,builder'></script>
+	<script type='text/javascript' src='http://www.gamedev.net/public/min/index.php?ipbv=34014&amp;nck=4b93cd7f1f76df9c2c1783aae5cc39b1&amp;charset=UTF-8&amp;f=public/js/ipb.js,cache/lang_cache/1/ipb.lang.js,public/js/ips.hovercard.js,public/js/ips.quickpm.js,public/js/ips.sharelinks.js,public/js/ips.rating.js,public/js/ips.like.js,public/js/ips.comments.js' charset='UTF-8'></script><script type="text/javascript" src="https://www.google.com/jsapi?"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?"></script>
+  <script type='text/javascript' src='http://www.gamedev.net/public/js/ips.googleSearchpop.js'></script>
+  <script type='text/javascript'>
+	if ( typeof ipb.googleSearch == 'object' )
+	{
+		ipb.googleSearch.cseKey = '015339353205569714001:onzj1byha_k';
+                ipb.googleSearch.linkTarget = 'new';
+                ipb.googleSearch.tabImage = '0';
+                ipb.googleSearch.tabBlog = '0';
+                ipb.googleSearch.tabVideo = '0';
+                ipb.googleSearch.tabWeb = '0';
+                ipb.googleSearch.tabBook = '0';
+                ipb.googleSearch.tabNews = '0';
+                ipb.googleSearch.popwidth = '800';
+                ipb.googleSearch.popheight = '480';
+                ipb.googleSearch.popupyn = '0';
+		ipb.googleSearch.alwaysDefault = true;
+	}
+	else
+	{
+		$( document ).observe( 'dom:loaded', function()
+		{
+			
+			$( 's_google' ).up( '.special' ).remove();
+		});
+	}
+</script><script type='text/javascript' src='http://public.gamedev5.net/public/js/squote.js'></script>
+
+
+
+
+
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type='text/javascript' src='http://www.gamedev.net/public/js/3rd_party/tabs/tabs.js'></script>
+<!--<script type='text/javascript' src='http://www.gamedev.net/public/js/ratewidget.js?nck=4b93cd7f1f76df9c2c1783aae5cc39b12'></script>-->
+
+
+
+<script type="text/javascript"> 
+
+// see whether device supports touch events (a bit simplistic, but...)
+var hasTouch = ("ontouchstart" in window);
+var iOS5 = /iPad|iPod|iPhone/.test(navigator.platform) && "matchMedia" in window;
+
+document.observe("dom:loaded", function() {
+
+var viewport = document.viewport.getDimensions();
+
+if (viewport.width <= 640)
+{
+$("dark").hide();
+
+}
+ 
+// hook touch events for drop-down menus
+// NB: if has touch events, then has standards event handling too
+// but we don't want to run this code on iOS5+
+if (hasTouch && document.querySelectorAll && !iOS5) {
+    var i, len, element,
+        dropdowns = document.querySelectorAll("#dark li.drop > a");
+ 
+    function menuTouch(event) {
+        // toggle flag for preventing click for this link
+        var i, len, noclick = !(this.dataNoclick);
+ 
+        // reset flag on all links
+        for (i = 0, len = dropdowns.length; i < len; ++i) {
+            dropdowns[i].dataNoclick = false;
+        }
+ 
+        // set new flag value and focus on dropdown menu
+        this.dataNoclick = noclick;
+        this.focus();
+    }
+ 
+    function menuClick(event) {
+        // if click isn't wanted, prevent it
+        if (this.dataNoclick) {
+            event.preventDefault();
+        }
+    }
+ 
+    for (i = 0, len = dropdowns.length; i < len; ++i) {
+        element = dropdowns[i];
+        element.dataNoclick = false;
+        element.addEventListener("touchstart", menuTouch, false);
+        element.addEventListener("click", menuClick, false);
+    }
+}
+
+});document.observe("dom:loaded", function() {var FAVE_TEMPLATE = '';    
+var ajaxUrl = ipb.vars['base_url'] + "app=search&module=ajax&section=taginfo&md5check=" + ipb.vars['secure_hash'];
+ipb.hoverCardRegister.initialize( 'taginfo', { 'w' : '300px', 'delay': 750, 'position' : 'bottomLeft' ,  'getId': true, 'setIdParam': 'tag', /*'ajaxUrl' : ajaxUrl,*/ 'callback' : initTagLike } );
+function initTagLike(hoverCardObject, id)
+{
+var ajaxUrl = ipb.vars['base_url'] + "app=search&module=ajax&section=taginfo&md5check=" + ipb.vars['secure_hash'] + "&tag=" + encodeURIComponent($(id).readAttribute('hovercard-id'));
+     new Ajax.Request( ajaxUrl,
+						{
+				    		method: 'post',
+                            evalJS: 'true',
+							onSuccess: function(t)
+							{
+							    hoverCardObject.card.update(t.responseText);
+                    			ipb.delegate.register('.ftoggle' , ipb.like.clicked );
+                    			ipb.delegate.register('._fsubmit', ipb.like.save );
+                    			ipb.delegate.register('._funset' , ipb.like.remove );
+                    			ipb.delegate.register('._fmore'  , ipb.like.more );
+                    			
+                    			/* Make sure hcards work */
+                    			ipb.like.resetEvents();
+							}
+					       });	
+}
+
+});
+
+  var _gaq = _gaq || [];
+var pluginUrl =
+ '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-279474-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+	
+		
+			
+			
+			
+			
+				<link rel="canonical" href="http://www.gamedev.net/page/resources/_/technical/general-programming/finite-state-machines-and-regular-expressions-r3176" />
+			
+		
+
+			
+			
+			
+			
+				<link rel="image_src" href="http://www.gamedev.net/uploads/a5cef4db2ceadbdbe26dda561e7b9fff.jpg" />
+			
+		
+
+			
+			
+			
+			
+				<meta name="medium" content="news" />
+			
+		
+	
+
+		
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="GameDev.net Forums RSS" href="http://www.gamedev.net/rss/forums/1-gamedevnet-forums-rss/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="GameDev.net Journals RSS feed " href="http://www.gamedev.net/rss/blog/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="IP.Gallery Images RSS Feed" href="http://www.gamedev.net/rss/gallery/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Events Calendar" href="http://www.gamedev.net/rss/calendar/1-events-calendar/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Last 10 Submissions RSS Feed" href="http://www.gamedev.net/rss/downloads/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles" href="http://www.gamedev.net/rss/ccs/1-articles/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books" href="http://www.gamedev.net/rss/ccs/3-books/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Contests" href="http://www.gamedev.net/rss/ccs/35-contests/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Events" href="http://www.gamedev.net/rss/ccs/16-events/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Indie Project Stories" href="http://www.gamedev.net/rss/ccs/38-indie-project-stories/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Showdown" href="http://www.gamedev.net/rss/ccs/33-showdown/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Technical" href="http://www.gamedev.net/rss/ccs/1c940-technical/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Creative" href="http://www.gamedev.net/rss/ccs/1c941-creative/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Business" href="http://www.gamedev.net/rss/ccs/1c942-business/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Reviews" href="http://www.gamedev.net/rss/ccs/1c970-reviews/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: GameDev.net Soapbox" href="http://www.gamedev.net/rss/ccs/1c969-gamedevnet-soapbox/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Closed Articles" href="http://www.gamedev.net/rss/ccs/1c968-closed-articles/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Game Programming" href="http://www.gamedev.net/rss/ccs/1c943-game-programming/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: General Programming" href="http://www.gamedev.net/rss/ccs/1c944-general-programming/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Graphics Programming and Theory" href="http://www.gamedev.net/rss/ccs/1c945-graphics-programming-and-theory/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: DirectX and XNA" href="http://www.gamedev.net/rss/ccs/1c946-directx-and-xna/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: OpenGL" href="http://www.gamedev.net/rss/ccs/1c947-opengl/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Multiplayer and Network Programming" href="http://www.gamedev.net/rss/ccs/1c948-multiplayer-and-network-programming/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Artificial Intelligence" href="http://www.gamedev.net/rss/ccs/1c949-artificial-intelligence/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Math and Physics" href="http://www.gamedev.net/rss/ccs/1c950-math-and-physics/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Mobile Development" href="http://www.gamedev.net/rss/ccs/1c951-mobile-development/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: APIs and Tools" href="http://www.gamedev.net/rss/ccs/1c952-apis-and-tools/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Game Design" href="http://www.gamedev.net/rss/ccs/1c953-game-design/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Music and Sound" href="http://www.gamedev.net/rss/ccs/1c954-music-and-sound/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Visual Arts" href="http://www.gamedev.net/rss/ccs/1c955-visual-arts/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Breaking Into the Industry" href="http://www.gamedev.net/rss/ccs/1c956-breaking-into-the-industry/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Business and Law" href="http://www.gamedev.net/rss/ccs/1c957-business-and-law/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Interviews" href="http://www.gamedev.net/rss/ccs/1c958-interviews/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Articles: Production and Management" href="http://www.gamedev.net/rss/ccs/1c963-production-and-management/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books: Technical" href="http://www.gamedev.net/rss/ccs/3c959-technical/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books: Creative" href="http://www.gamedev.net/rss/ccs/3c962-creative/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books: Industry Related" href="http://www.gamedev.net/rss/ccs/3c966-industry-related/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books: Business and Law" href="http://www.gamedev.net/rss/ccs/3c964-business-and-law/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books: Production and Management" href="http://www.gamedev.net/rss/ccs/3c965-production-and-management/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books: General Programming" href="http://www.gamedev.net/rss/ccs/3c960-general-programming/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Books: APIs and Tools" href="http://www.gamedev.net/rss/ccs/3c961-apis-and-tools/" />
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Classifieds RSS Feed" href="http://www.gamedev.net/rss/classifieds/" />
+			
+			
+			
+		
+	
+
+	
+
+
+	
+
+
+
+		
+		<script type='text/javascript'>
+	//<![CDATA[
+		/* ---- URLs ---- */
+		ipb.vars['base_url'] 			= 'http://www.gamedev.net/index.php?s=384a733d225a459526c5b22fa693e8e0&';
+		ipb.vars['board_url']			= 'http://www.gamedev.net';
+		ipb.vars['img_url'] 			= "http://www.gamedev.net/public/style_images/master";
+		ipb.vars['loading_img'] 		= 'http://www.gamedev.net/public/style_images/master/loading.gif';
+		ipb.vars['active_app']			= 'ccs';
+		ipb.vars['upload_url']			= 'http://www.gamedev.net/uploads';
+		/* ---- Member ---- */
+		ipb.vars['member_id']			= parseInt( 0 );
+		ipb.vars['is_supmod']			= parseInt( 0 );
+		ipb.vars['is_admin']			= parseInt( 0 );
+		ipb.vars['secure_hash'] 		= '880ea6a14ea49e853634fbdc5015a024';
+		ipb.vars['session_id']			= '384a733d225a459526c5b22fa693e8e0';
+		ipb.vars['twitter_id']			= 0;
+		ipb.vars['fb_uid']				= 0;
+		ipb.vars['auto_dst']			= parseInt( 0 );
+		ipb.vars['dst_in_use']			= parseInt(  );
+		ipb.vars['is_touch']			= false;
+		ipb.vars['member_group']		= {"g_mem_info":"1"}
+		/* ---- cookies ----- */
+		ipb.vars['cookie_id'] 			= 'gd_';
+		ipb.vars['cookie_domain'] 		= '.gamedev.net';
+		ipb.vars['cookie_path']			= '/';
+		/* ---- Rate imgs ---- */
+		ipb.vars['rate_img_on']			= 'http://www.gamedev.net/public/style_images/master/star.png';
+		ipb.vars['rate_img_off']		= 'http://www.gamedev.net/public/style_images/master/star_off.png';
+		ipb.vars['rate_img_rated']		= 'http://www.gamedev.net/public/style_images/master/star_rated.png';
+		/* ---- Uploads ---- */
+		ipb.vars['swfupload_swf']		= 'http://www.gamedev.net/public/js/3rd_party/swfupload/swfupload.swf';
+		ipb.vars['swfupload_enabled']	= true;
+		ipb.vars['use_swf_upload']		= ( '' == 'flash' ) ? true : false;
+		ipb.vars['swfupload_debug']		= false;
+		/* ---- other ---- */
+		ipb.vars['highlight_color']     = "#ade57a";
+		ipb.vars['charset']				= "UTF-8";
+		ipb.vars['time_offset']			= "-6";
+		ipb.vars['hour_format']			= "12";
+		ipb.vars['seo_enabled']			= 1;
+		
+		ipb.vars['seo_params']			= {"start":"-","end":"\/","varBlock":"?","varPage":"page-","varSep":"&","varJoin":"="};
+		
+		/* Templates/Language */
+		ipb.templates['inlineMsg']		= "";
+		ipb.templates['ajax_loading'] 	= "<div id='ajax_loading'><img src='http://www.gamedev.net/public/style_images/master/ajax_loading.gif' alt='" + ipb.lang['loading'] + "' /></div>";
+		ipb.templates['close_popup']	= "<img src='http://www.gamedev.net/public/style_images/master/close_popup.png' alt='x' />";
+		ipb.templates['rss_shell']		= new Template("<ul id='rss_menu' class='ipbmenu_content'>#{items}</ul>");
+		ipb.templates['rss_item']		= new Template("<li><a href='#{url}' title='#{title}'>#{title}</a></li>");
+		
+		ipb.templates['autocomplete_wrap'] = new Template("<ul id='#{id}' class='ipb_autocomplete' style='width: 250px;'></ul>");
+		ipb.templates['autocomplete_item'] = new Template("<li id='#{id}' data-url='#{url}'><img src='#{img}' alt='' class='ipsUserPhoto ipsUserPhoto_mini' />&nbsp;&nbsp;#{itemvalue}</li>");
+		ipb.templates['page_jump']		= new Template("<div id='#{id}_wrap' class='ipbmenu_content'><h3 class='bar'>Jump to page</h3><p class='ipsPad'><input type='text' class='input_text' id='#{id}_input' size='8' /> <input type='submit' value='Go' class='input_submit add_folder' id='#{id}_submit' /></p></div>");
+		ipb.templates['global_notify'] 	= new Template("<div class='popupWrapper'><div class='popupInner'><div class='ipsPad'>#{message} #{close}</div></div></div>");
+		
+		
+		ipb.templates['header_menu'] 	= new Template("<div id='#{id}' class='ipsHeaderMenu boxShadow'></div>");
+		
+		Loader.boot();
+	//]]>
+	</script>
+	</head>
+	<body id='ipboard_body'><p id='content_jump' class='hide'><a id='top'></a><a href='#j_content' title='Jump to content' accesskey='m'>Jump to content</a></p>
+		<div id='ipbwrapper'>
+			<!-- ::: TOP BAR: Sign in / register or user drop down and notification alerts ::: -->
+			<div id='header_bar' class='clearfix'>
+				<div class='main_width'>
+					<ul id='admin_bar' class='ipsList_inline right'>
+
+					
+                                           
+					</ul>
+
+					<div id='user_navigation' class='not_logged_in'>
+							
+							<ul class='ipsList_inline right'>
+								<li>
+									<span class='services'>
+										
+											<a href='https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;serviceClick=facebook'><span class="ip_facebook ip_sprite"></span></a>
+										
+										
+											<a href='https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;serviceClick=twitter'><span class="ip_twitter ip_sprite"></span></a>
+										
+										
+										<a href='https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;do=process&amp;use_google=1&amp;auth_key=880ea6a14ea49e853634fbdc5015a024' title='Log In with Google' id='googleIcon'>
+<img src='http://www.gamedev.net/public//style_extra/signin/login-google-icon.png' alt='Log In with Google' style="margin-top:-10px"/>
+</a>
+<div id='googleOptions' style='display:none;'>
+<h3>Google Sign in options</h3>
+	<form action="https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;do=process&amp;use_google=1" method="post" id='googleLogin'>
+<input type='hidden' name='auth_key' value='880ea6a14ea49e853634fbdc5015a024' />
+<input type="hidden" value="http://www.gamedev.net/page/resources/_/technical/general-programming/finite-state-machines-and-regular-expressions-r3176" name="referer">
+<fieldset id='googlesignin_options'>
+				<ul class='ipsForm ipsForm_vertical ipsPad_double'>
+					<li class='ipsField ipsField_checkbox clearfix'>
+						<input type='checkbox' id='remember' checked='checked' name='rememberMe' value='1' class='input_check' />
+						<p class='ipsField_content'>
+							<label for='remember'>Remember me</label><br />
+							<span class='desc lighter'>This is not recommended for shared computers</span>
+						</p>
+					</li>
+					
+						<li class='ipsField ipsField_checkbox clearfix'>
+							<input type='checkbox' id='invisible' name='anonymous' value='1' class='input_check' />
+							<p class='ipsField_content'>
+								<label for='invisible'>Sign in anonymously</label><br />
+								<span class='desc lighter'>Don't add me to the active users list</span>
+							</p>
+						</li>
+					
+					
+					<li class='ipsPad_top ipsForm_center desc ipsType_smaller'>
+						<a rel="nofollow" href='http://www.gamedev.net/privacypolicy/'>Privacy Policy</a>
+					</li>
+					
+				</ul>
+			</fieldset>
+<div class='ipsForm_submit ipsForm_center'>
+					<input type='submit' class='ipsButton' value='Sign In' />
+				</div>
+</form>
+</div>
+<script type='text/javascript'>
+var _googleLogin = null;
+function googlePop()
+{
+if ( !$('googleOptions') )
+{
+return false;
+}
+if( !_googleLogin )
+{
+ _googleLogin = new ipb.Popup( 'google', { 
+type: 'pane',
+initial: $('googleOptions').innerHTML,
+hideAtStart: false,
+w: '600px',
+modal: 'true'
+} );
+}
+else
+{
+ _googleLogin.show();
+}
+}
+ $('googleIcon').observe( 'click', function(e) {
+googlePop();
+        Event.stop(e);
+        return false;
+  });
+</script>
+									</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href='https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login' title='Sign In'>Sign In</a>&nbsp;&nbsp;&nbsp;<a href="#" id='sign_in'></a>
+								</li>
+								<li>
+									<a href="https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=register" title='Create Account' id='register_link'>Create Account</a>
+								</li>
+							</ul>
+						</div>
+				</div>
+			</div>
+			<!-- ::: BRANDING STRIP: Logo and search box ::: -->
+			<div id='branding'>
+				<div class='main_width'>
+					<div id='logo'>
+						
+<div id='chat-tab-count-wrap'><span id='chat-tab-count' class='ipsHasNotifications' title='' style='display:none;'>7</span></div>
+<script type='text/javascript'>
+// And then move
+document.observe("dom:loaded", function(){
+	var _thisHtml	= $('nav_app_ipchat').down('a').innerHTML;
+	_thisHtml = _thisHtml + $('chat-tab-count-wrap').innerHTML;
+	$('nav_app_ipchat').down('a').update( _thisHtml ).setStyle( { position: 'relative' } );
+	$('chat-tab-count-wrap').remove();
+	$('chat-tab-count').show();
+});
+</script>
+
+							<a href='http://www.gamedev.net' title='Go to community index' rel="home" accesskey='1'><span class="gd_small_logo sprite"></span></a>
+						
+					</div>
+
+
+                                <div id="navmenu">
+                                   <a href="#" onclick="Effect.toggle('dark', 'appear', {duration: 0.1}); return false;" class="box-shadow-menu"></a>
+                                </div>
+
+                                <div id="leaderboard">
+<!-- Leaderboard_Main -->
+<div id='div-gpt-ad-1410074947216-0'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1410074947216-0'); });
+</script>
+</div>
+
+                                </div>
+					
+				</div>
+
+			</div>
+			<!-- ::: APPLICATION TABS ::: -->
+				<div class='main_width'>
+        <div id='search' class='right'>
+	<form action="http://www.gamedev.net/index.php?app=core&amp;module=search&amp;do=search&amp;fromMainBar=1" method="post" id='search-box' >
+		<fieldset>
+			<label for='main_search' class='hide'>Search</label>
+			<a href='http://www.gamedev.net/index.php?app=core&amp;module=search&amp;search_in=ccs' title='Advanced Search' accesskey='4' rel="search" id='adv_search' class='advanced_search sprite right'>Advanced</a>
+			<span id='search_wrap' class='right'>
+				<input type='text' id='main_search' name='search_term' class='inactive' size='17' tabindex='6' />
+				<span class='choice ipbmenu clickable' id='search_options' style='display: none'></span>
+				<ul id='search_options_menucontent' class='ipbmenu_content ipsPad' style='display: none'>
+					<li class='title'><strong>Search section:</strong></li>
+					<li class='special'>
+	<label for='s_google' title='Google'>
+		<input type='radio' name='search_app' value="google" class='input_radio' id='s_google' />Google
+	</label>
+</li>
+					
+					
+							
+		<li class='special'><label for='s_ccs_db' title='This database'><input type='radio' name='search_app' value="ccs:database:1" class='input_radio' id='s_ccs_cat' checked='checked' /> <strong>This database</strong></label></li>
+	
+						
+					<li class='app'><label for='s_forums' title='Forums'><input type='radio' name='search_app' class='input_radio' id='s_forums' value="forums"  />Forums</label></li><li class='app'><label for='s_members' title='Members'><input type='radio' name='search_app' class='input_radio' id='s_members' value="members"  />Members</label></li><li class='app'><label for='s_core' title='Help Files'><input type='radio' name='search_app' class='input_radio' id='s_core' value="core"  />Help Files</label></li>
+						
+					
+
+						
+					
+
+						
+					
+
+						<li class='app'><label for='s_blog' title='Developer Journals'><input type='radio' name='search_app' class='input_radio' id='s_blog' value="blog"  />Developer Journals</label></li>
+					
+
+						<li class='app'><label for='s_gallery' title='Gallery'><input type='radio' name='search_app' class='input_radio' id='s_gallery' value="gallery"  />Gallery</label></li>
+					
+
+						<li class='app'><label for='s_calendar' title='Calendar'><input type='radio' name='search_app' class='input_radio' id='s_calendar' value="calendar"  />Calendar</label></li>
+					
+
+						<li class='app'><label for='s_downloads' title='Downloads'><input type='radio' name='search_app' class='input_radio' id='s_downloads' value="downloads"  />Downloads</label></li>
+					
+
+						<li class='app'><label for='s_ccs' title='Resources'><input type='radio' name='search_app' class='input_radio' id='s_ccs' value="ccs"  />Resources</label></li>
+					
+
+						<li class='app'><label for='s_nexus' title='Store'><input type='radio' name='search_app' class='input_radio' id='s_nexus' value="nexus"  />Store</label></li>
+					
+
+						
+					
+
+						<li class='app'><label for='s_classifieds' title='Classifieds'><input type='radio' name='search_app' class='input_radio' id='s_classifieds' value="classifieds"  />Classifieds</label></li>
+					
+
+						
+					
+
+						<li class='app'><label for='s_tracker' title='Tracker'><input type='radio' name='search_app' class='input_radio' id='s_tracker' value="tracker"  />Tracker</label></li>
+					
+
+						
+					
+
+						
+					
+
+						
+					
+
+						
+					
+
+						<li class='app'><label for='s_links' title='Links'><input type='radio' name='search_app' class='input_radio' id='s_links' value="links"  />Links</label></li>
+					
+
+						
+					
+
+						
+					
+				</ul>
+				<input type='submit' class='submit_input clickable' value='Search' />
+			</span>
+			
+		</fieldset>
+	</form>
+</div>
+        <nav id="dark">
+            <ul>
+
+          
+                <li><a href="/">Home</a></li> 
+                <li><a href="/forum/31-for-beginners/">For Beginners</a></li> 
+                <li class="drop"><a href="/page/resources">Articles</a>
+                  <ul class="menu">
+                  <li><a href="/page/resources">All Articles</a></li>
+                  <li><a href="/page/resources/_/gdnethelp/how-to-publish-on-gamedevnet-r2927" style="background:#009900;color:white;border-top:solid 1px #00cc00">Post an Article</a></li>
+                  <li class="drop">
+                       <a href="/page/resources/_/technical/">Technical</a>
+                       <ul>
+                          <li><a href="/page/resources/_/technical/game-programming/">Game Programming</a></li>
+                          <li><a href="/page/resources/_/technical/general-programming/">General Programming</a></li>
+                          <li><a href="/page/resources/_/technical/graphics-programming-and-theory/">Graphics Programming and Theory</a></li>
+                          <li><a href="/page/resources/_/technical/directx-and-xna/">DirectX and XNA</a></li>
+                          <li><a href="/page/resources/_/technical/opengl/">OpenGL</a></li>
+                          <li><a href="/page/resources/_/technical/multiplayer-and-network-programming/">Multiplayer and Network Programming</a></li>
+                          <li><a href="/page/resources/_/technical/artificial-intelligence/">Artificial Intelligence</a></li>
+                          <li><a href="/page/resources/_/technical/math-and-physics/">Math and Physics</a></li>
+                          <li><a href="/page/resources/_/technical/mobile-development/">Mobile Development</a></li>
+                          <li><a href="/page/resources/_/technical/apis-and-tools/">APIs and Tools</a></li>
+                       </ul>
+                  </li>
+                  <li class="drop">
+                       <a href="/page/resources/_/creative/">Creative</a>
+                       <ul>
+                          <li><a href="/page/resources/_/creative/game-design/">Game Design</a></li>
+                          <li><a href="/page/resources/_/creative/music-and-sound/">Music and Sound</a></li>
+                          <li><a href="/page/resources/_/creative/visual-arts/">Visual Arts</a></li>
+                       </ul>
+                  </li>
+                  <li class="drop">
+                       <a href="/page/resources/_/business/">Business</a>
+                       <ul>
+                          <li><a href="/page/resources/_/business/breaking-into-the-industry/">Breaking into the Industry</a></li>
+                          <li><a href="/page/resources/_/business/production-and-management/">Production and Management</a></li>
+                          <li><a href="/page/resources/_/business/interviews/">Interviews</a></li>
+                          <li><a href="/page/resources/_/business/business-and-law/">Business and Law</a></li>
+                          <li><a href="/page/resources/_/business/435/">Event Coverage</a></li>
+                       </ul>
+                  </li>
+                  </ul>
+                </li>
+                <li class="drop"><a href="/index">Forums</a>
+                    <ul class="menu">
+                    <li><a href="/index">All Forums</a></li>
+                    <li class="drop">
+                        <a href="/forum/122-community-interaction/">Community Interaction</a>
+                        <ul>
+                        <li><a href="/forum/3-gdnet-lounge/">GDNet Lounge</a></li>
+                        <li><a href="/forum/157-coding-horrors/">Coding Horrors</a></li>
+                        <li><a href="/forum/158-article-writing/">Article Writing</a></li>
+                        <li><a href="/forum/4-gdnet-comments-suggestions-and-ideas/">GDNet Comments, Suggestions and Ideas</a></li>
+                        <li><a href="/forum/6-your-announcements/">Your Announcements</a></li>
+                        </ul>
+                    </li>
+                    <li class="drop">
+                        <a href="/forum/123-the-technical-side/">Technical</a>
+                        <ul>
+                        <li><a href="/forum/11-game-programming/">Game Programming</a></li>
+                        <li><a href="/forum/21-general-programming/">General Programming</a></li>
+                        <li><a href="/forum/12-graphics-programming-and-theory/">Graphics Programming and Theory</a></li>
+                        <li><a href="/forum/10-directx-and-xna/">DirectX and XNA</a></li>
+                        <li><a href="/forum/25-opengl/">OpenGL</a></li>
+                        <li><a href="/forum/15-multiplayer-and-network-programming/">Multiplayer and Network Programming</a></li>
+                        <li><a href="/forum/9-artificial-intelligence/">Artificial Intelligence</a></li>   
+                        <li><a href="/forum/20-math-and-physics/">Math and Physics</a></li>     
+                        <li><a href="/forum/39-mobile-and-console-development/">Mobile &amp; Console Development</a></li>    
+                        <li><a href="/forum/159-build-systems-and-source-control/">Build Systems &amp; Source Control</a></li>
+                        <li><a href="/forum/41-apis-and-tools/">APIs and Tools</a></li>                    
+                        </ul>                      
+                    </li>
+                    <li class="drop">
+
+                         <a href="/forum/124-the-creative-side/">Creative</a>
+                         <ul>
+                         <li><a href="/forum/17-game-design/">Game Design</a></li>
+                         <li><a href="/forum/32-writing-for-games/">Writing For Games</a></li>
+                         <li><a href="/forum/19-music-and-sound/">Music and Sound</a></li>
+                         <li><a href="/forum/18-visual-arts/">Visual Arts</a></li>
+                         <li><a href="/gallery">Gallery</a></li>
+                         </ul>                
+               
+  
+                    </li>
+
+                    <li class="drop"><a href="/forum/133-the-business-side/">Business</a>
+                          <ul>
+                          <li><a href="/forum/101-breaking-into-the-games-industry/">Breaking into the Industry</a></li>
+                          <li><a href="/forum/5-the-business-and-law-of-game-development/">Business &amp; Law</a></li>
+                          <li><a href="/forum/155-production-and-management/">Production &amp; Management</a></li>
+                          </ul>                
+                    </li>  
+               
+                    </ul>                
+                </li>              
+                <li class="drop"><a href="/blogs">Community</a>
+                    <ul class="menu">
+                    <li><a href="/blogs">Developer Journals</a></li>
+                    <!--<li><a href="/page/showdown/">Screenshot Showdown</a></li>-->
+                    <li><a href="/subscribe">GDNet+ Subscriptions</a></li>                    
+                    <li><a href="/gallery">Gallery</a></li>
+                    <!--<li><a href="/books">Books</a></li>-->
+                    <li><a href="/store/">Store</a></li>  
+                    </ul>                
+                </li>
+                <!--<li><a href="/sm/">Top Members</a></li>-->
+                <li class="drop"><a href="/classifieds">Classifieds</a>
+                    <ul class="menu">
+                    <li><a href="/classifieds/category/4-job-offers/">Job Offers</a></li>
+                    <li><a href="/classifieds/category/2-contractors/">Contractors For Hire</a></li>
+                    <li><a href="/classifieds/category/21-contract-projects/">Contract Projects</a></li>
+                    <li><a href="/classifieds/category/5-hobbyist-projects/">Hobbyist Projects</a></li>     
+                    </ul>                
+                </li>
+                <li><a href="/files">Marketplace</a></li>
+
+                <!--<li><a href="/info/media">Advertise</a></li>-->
+            </ul>
+        </nav>
+
+
+				
+			</div>	
+			
+			<!-- ::: MAIN CONTENT AREA ::: -->
+			<div id='content' class='clearfix'>
+				<!-- ::: NAVIGATION BREADCRUMBS ::: -->
+                                <div id='secondary_navigation' class='clearfix'>
+				<ol class='breadcrumb top ipsList_inline left'>
+														
+							
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									
+									 <a href='http://www.gamedev.net/page/index.html/' title='Return to Home' itemprop="url"><span itemprop="title">Home</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'>&raquo;</span>
+									 <a href='http://www.gamedev.net/page/resources' title='Return to Articles' itemprop="url"><span itemprop="title">Articles</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'>&raquo;</span>
+									 <a href='http://www.gamedev.net/page/resources/_/technical/' title='Return to Technical' itemprop="url"><span itemprop="title">Technical</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'>&raquo;</span>
+									 <a href='http://www.gamedev.net/page/resources/_/technical/general-programming/' title='Return to General Programming' itemprop="url"><span itemprop="title">General Programming</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'>&raquo;</span>
+									 <span itemprop="title">Article: Finite State Machines and Regular Expressions</span>
+								</li>
+								
+							
+						</ol>
+
+<div class="desc right" style="margin-top: -7px">
+<div style="display: inline-block; position: relative; top: -6px;"> 
+<a href="/index.php?app=core&module=search&do=followed" data-tooltip="View the stuff you chose to follow" style="padding-right:10px; border-right: solid 1px black; margin-right: 5px">Watched Content</a>
+<a href="/index.php?app=core&module=search&do=viewNewContent&search_app=forums&search_app_filters[forums][searchInKey]=&period=today&userMode=&followedItemsOnly=0" data-tooltip="View new stuff on the site" style="padding-right:10px; border-right: solid 1px black; margin-right: 5px">New Content</a>
+</div>
+
+<a href="http://www.facebook.com/GameDev.net" data-tooltip="Join our Facebook group!" target="new"><span class="Facebook sprite" style="margin-right: 3px"></span></a>
+<a href="http://twitter.com/gdevnet" data-tooltip="Follow us on Twitter!" target="new"><span class="Twitter sprite" style="margin-right: 3px"></span></a>
+<a href="http://www.linkedin.com/groups?about=&gid=132271&trk=anet_ug_grppro" data-tooltip="Join our Linkedin group!" target="new"><span class="Linkedin sprite" style="margin-right: 3px"></span></a>
+<a href="" id="rss_feed" class="clickable" alt="RSS Feed" target="new"><span class="Rss sprite" style="margin-right: 3px"></span></a>
+</div>
+				</div>
+				<br />
+
+				<!-- ::: CONTENT ::: -->
+				
+				<div class="clearfix">
+
+
+
+	<script type="text/javascript" src="http://www.gamedev.net/public/js/3rd_party/prettify/prettify.js"></script>
+	<script type='text/javascript' src='http://www.gamedev.net/public/js/3rd_party/prettify/lang-sql.js'></script>
+	<!-- By default we load generic code, php, css, sql and xml/html; load others here if desired -->
+	<script type="text/javascript">
+	//<![CDATA[
+		Event.observe( window, 'load', function(e){ prettyPrint() });
+	//]]>
+	</script><script LANGUAGE="javascript">
+<!--
+function confirmSubmit(prompt)
+{
+var agree=confirm(prompt);
+if (agree)
+	return true ;
+else
+	return false ;
+}
+// -->
+</script>
+
+
+<div class='ipsLayout ipsLayout_withright ipsLayout_largeright'>
+  <div class='ipsLayout_right'>
+        <div id="block_RelatedArticles" class="ipsSideBlock wide">
+  <h3>More Like This</h3>
+  <ul>
+<li style='margin-bottom:8px;font-size:13px;font-family:'Droid Sans',droid-sans,helvetica;padding-bottom:8px;border-bottom:dotted 1px #eee;'><a href="http://www.gamedev.net/page/resources/_/technical/general-programming/algorithmic-forays-part-3-r2092">Algorithmic Forays Part 3</a><br/></li>
+
+
+<li style='margin-bottom:8px;font-size:13px;font-family:'Droid Sans',droid-sans,helvetica;padding-bottom:8px;border-bottom:dotted 1px #eee;'><a href="http://www.gamedev.net/page/resources/_/technical/general-programming/algorithmic-forays-part-4-r2106">Algorithmic Forays Part 4</a><br/></li>
+
+
+<li style='margin-bottom:8px;font-size:13px;font-family:'Droid Sans',droid-sans,helvetica;padding-bottom:8px;border-bottom:dotted 1px #eee;'><a href="http://www.gamedev.net/page/resources/_/technical/general-programming/algorithmic-forays-part-6-r2170">Algorithmic Forays Part 6</a><br/></li>
+
+
+<li style='margin-bottom:8px;font-size:13px;font-family:'Droid Sans',droid-sans,helvetica;padding-bottom:8px;border-bottom:dotted 1px #eee;'><a href="http://www.gamedev.net/page/resources/_/technical/general-programming/algorithmic-forays-part-2-r2076">Algorithmic Forays Part 2</a><br/></li>
+
+
+<li style='margin-bottom:8px;font-size:13px;font-family:'Droid Sans',droid-sans,helvetica;padding-bottom:8px;border-bottom:dotted 1px #eee;'><a href="http://www.gamedev.net/page/resources/_/technical/general-programming/algorithmic-forays-part-5-r2131">Algorithmic Forays Part 5</a><br/></li>
+
+</div>
+  </ul>
+        <!-- Box_Main -->
+<div id='div-gpt-ad-1412653010761-0' style='width:300px; height:250px;margin-bottom:10px'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1412653010761-0'); });
+</script>
+</div>
+	       <div class="ipsSideBlock wide">
+
+	<h3>Categories <a href='http://www.gamedev.net/page/resources?view=categories'><u>(See All)</u></a></h3>
+	<ul style="margin-top: 10px;">
+		
+			
+			<li>
+					<a href='http://www.gamedev.net/page/resources/_/technical/'>Technical</a>
+					
+						<ul style="margin-left: 15px;margin-top:5px; margin-bottom: 15px;">
+							
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/game-programming/'>Game Programming</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/general-programming/'>General Programming</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/graphics-programming-and-theory/'>Graphics Programming and Theory</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/directx-and-xna/'>DirectX and XNA</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/opengl/'>OpenGL</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/multiplayer-and-network-programming/'>Multiplayer and Network Programming</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/artificial-intelligence/'>Artificial Intelligence</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/math-and-physics/'>Math and Physics</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/mobile-development/'>Mobile Development</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/technical/apis-and-tools/'>APIs and Tools</a>
+								</li>
+							
+						</ul>
+					
+				</li>
+			
+
+			<li>
+					<a href='http://www.gamedev.net/page/resources/_/creative/'>Creative</a>
+					
+						<ul style="margin-left: 15px;margin-top:5px; margin-bottom: 15px;">
+							
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/creative/game-design/'>Game Design</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/creative/music-and-sound/'>Music and Sound</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/creative/visual-arts/'>Visual Arts</a>
+								</li>
+							
+						</ul>
+					
+				</li>
+			
+
+			<li>
+					<a href='http://www.gamedev.net/page/resources/_/business/'>Business</a>
+					
+						<ul style="margin-left: 15px;margin-top:5px; margin-bottom: 15px;">
+							
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/business/435/'>Event Coverage</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/business/breaking-into-the-industry/'>Breaking Into the Industry</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/business/business-and-law/'>Business and Law</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/business/interviews/'>Interviews</a>
+								</li>
+							
+
+								<li>
+									<a href='http://www.gamedev.net/page/resources/_/business/production-and-management/'>Production and Management</a>
+								</li>
+							
+						</ul>
+					
+				</li>
+			
+
+			
+			
+
+			
+			
+
+			<li>
+					<a href='http://www.gamedev.net/page/resources/_/gdnethelp/'>Gamedev.net Help</a>
+					
+				</li>
+			
+
+			
+			
+		
+	</ul>
+
+</div>
+	<div class="ipsSideBlock wide">
+
+						<h3><a href="/hub/resources/">Recent Resources</a></h3>
+						<ul>
+						
+						     
+							<li>
+								<a href="http://www.gamedev.net/page/resources/_/technical/game-programming/unreal-engine-4-c-quest-framework-r4316">Unreal Engine 4 C++ Quest Framework</a><br/>
+								<p class="meta"><span class="postdate">Mar 01 2016 08:37 AM</span> | <a class="discussion" href="http://www.gamedev.net/page/resources/_/technical/game-programming/unreal-engine-4-c-quest-framework-r4316">4 Comments</a></p>
+							</li>
+		                                     
+
+							<li>
+								<a href="http://www.gamedev.net/page/resources/_/technical/apis-and-tools/the-unity-tools-used-to-develop-our-fps-r4303">The Unity Tools Used to Develop Our FPS</a><br/>
+								<p class="meta"><span class="postdate">Feb 08 2016 03:29 PM</span> | <a class="discussion" href="http://www.gamedev.net/page/resources/_/technical/apis-and-tools/the-unity-tools-used-to-develop-our-fps-r4303">10 Comments</a></p>
+							</li>
+		                                     
+
+							<li>
+								<a href="http://www.gamedev.net/page/resources/_/technical/apis-and-tools/sony-cnet-component-set-analysis-r4296">Sony C#/.NET Component Set Analysis</a><br/>
+								<p class="meta"><span class="postdate">Jan 28 2016 12:31 PM</span> | <a class="discussion" href="http://www.gamedev.net/page/resources/_/technical/apis-and-tools/sony-cnet-component-set-analysis-r4296">12 Comments</a></p>
+							</li>
+		                                     
+
+							<li>
+								<a href="http://www.gamedev.net/page/resources/_/technical/apis-and-tools/online-video-game-engines-discover-why-you-should-use-them-r4295">Online Video Game Engines: Discover Why You Should Use Them</a><br/>
+								<p class="meta"><span class="postdate">Feb 22 2016 02:54 AM</span> | <a class="discussion" href="http://www.gamedev.net/page/resources/_/technical/apis-and-tools/online-video-game-engines-discover-why-you-should-use-them-r4295">17 Comments</a></p>
+							</li>
+		                                     
+
+							<li>
+								<a href="http://www.gamedev.net/page/resources/_/technical/game-programming/decoding-audio-for-xaudio2-with-microsoft-media-foundation-r4280">Decoding Audio for XAudio2 with Microsoft Media Foundation</a><br/>
+								<p class="meta"><span class="postdate">Jan 15 2016 01:24 PM</span> | <a class="discussion" href="http://www.gamedev.net/page/resources/_/technical/game-programming/decoding-audio-for-xaudio2-with-microsoft-media-foundation-r4280">6 Comments</a></p>
+							</li>
+		                                     
+
+							<li>
+								<a href="http://www.gamedev.net/page/resources/_/technical/artificial-intelligence/action-lists-simple-flexible-extendable-ai-r4275">Action Lists: Simple, Flexible, Extendable AI</a><br/>
+								<p class="meta"><span class="postdate">Jan 08 2016 08:39 PM</span> | <a class="discussion" href="http://www.gamedev.net/page/resources/_/technical/artificial-intelligence/action-lists-simple-flexible-extendable-ai-r4275">9 Comments</a></p>
+							</li>
+		                                     
+
+							<li>
+								<a href="http://www.gamedev.net/page/resources/_/technical/mobile-development/how-to-create-a-mobile-game-on-the-cheap-r4267">How to Create a Mobile Game on the Cheap</a><br/>
+								<p class="meta"><span class="postdate">Jan 14 2016 11:44 AM</span> | <a class="discussion" href="http://www.gamedev.net/page/resources/_/technical/mobile-development/how-to-create-a-mobile-game-on-the-cheap-r4267">3 Comments</a></p>
+							</li>
+		                                     
+						
+						</ul>
+						<p class="more"><a href="/hub/resources/">Show more &raquo;</a> | <a href="/index.php?app=core&module=search&do=new_posts&search_app=ccs">View all recent resources»</a></p>
+					
+				</div>	
+    </div>
+    <div class='ipsLayout_content'>
+
+    
+              
+
+
+
+<div class='__like right' data-app="ccs" data-area="ccs_custom_database_1_records" data-relid="3176" data-isfave="">
+	<span class='ipsButton_extra right _fmore clickable' title='2 member(s) follow this' data-tooltip="2 member(s) follow this"><img src='http://www.gamedev.net/public/style_images/master/icon_users.png' /> <strong>2</strong></span>
+
+</div>
+<script type="text/javascript">
+	var FAVE_TEMPLATE = new Template( "<h3>Unfollow</h3><div class='ipsPad'><span class='desc'>If you unfollow you will no longer receive any notifications</span><br /><p class='ipsForm_center'><input type='button' value='Unfollow' class='input_submit _funset' /></p></div>");
+</script>
+
+
+<script src="/public/js/ratewidget.js?nck=3" type="text/javascript"></script>
+<script type="text/javascript">
+	ipb.ratewidget.database_id = 1;
+</script>
+
+
+	<div style="margin-left: -8px;">
+	<div style="position:absolute;">
+	<a class="voteaction_like  vdisabled" id="vote_3176" href="#" data-tooltip="<b>You must login to GameDev.net</b><br/>Login to vote on this post.<br/>">Like</a>	
+	<div class="votecard">
+		<div>
+			<em><strong>18</strong><span>Likes</span></em>
+		</div>
+	</div>
+	<a class="voteaction_dislike  vdisabled" id="vote_3176" href="#" data-tooltip="<b>You must login to GameDev.net</b><br/>Login to vote on this post.<br/>">Dislike</a>	
+	</div>
+	</div>
+
+
+<div style='margin-left: 50px'>
+	<h1 class='ipsType_pagetitle' style='font-size: 27px; font-weight: 700'>
+	        
+	        
+	<!--ARTICLE TITLE-->
+	Finite State Machines and Regular Expressions
+	
+	 
+	
+	
+	</h1>
+	
+	<p class='ipsType_pagedesc'>
+	
+	<!--ARTICLE AUTHOR/EMAIL-->
+	<b>By 
+	<!--email address?-->
+	  
+	   <a href="/user/209764-gdarchive">Eli Bendersky</a>
+	  
+	
+	<!--ARTICLE COMPANY NAME/WEBPAGE-->
+	
+	   
+	</b>
+	
+	| Published Jun 12 2013 04:30 AM in <a href='http://www.gamedev.net/page/resources/_/technical/general-programming/'>General Programming</a>
+	
+	
+	<br/>Peer Reviewed by (<a href='/user/104075-dragonsoulj'>Dragonsoulj</a>, <a href='/user/102163-vilem-otte'>Vilem Otte</a>, <a href='/user/36615-jbadams'>jbadams</a>)
+	
+		
+	</p>
+	
+        <a class='ipsTag _hovertrigger' href="http://www.gamedev.net/index.php?app=search&module=tags&section=view&tag=fsm" hovercard-ref="taginfo" hovercard-id="fsm"><span>fsm</span></a> <a class='ipsTag _hovertrigger' href="http://www.gamedev.net/index.php?app=search&module=tags&section=view&tag=finite%2Bstate%2Bmachine" hovercard-ref="taginfo" hovercard-id="finite state machine"><span>finite state machine</span></a> <a class='ipsTag _hovertrigger' href="http://www.gamedev.net/index.php?app=search&module=tags&section=view&tag=regular%2Bexpression" hovercard-ref="taginfo" hovercard-id="regular expression"><span>regular expression</span></a> <a class='ipsTag _hovertrigger' href="http://www.gamedev.net/index.php?app=search&module=tags&section=view&tag=regex" hovercard-ref="taginfo" hovercard-id="regex"><span>regex</span></a><br />
+	
+	
+
+</div>
+
+<div id="article">
+
+	        
+
+      <div class='ipsBox' style="background: none; padding-left: 15px; border-top: dotted 1px #eee; margin-top: 4px">
+        <div class='ipsPad'>
+
+
+
+<!--class="yui3-cssreset yui3-cssbase"-->
+	<div id='article_body' style="padding: 5px; min-height: 250px; ">
+
+<div id="artstats" style='display:none;'>
+<span class="ipsButton secondary" onclick="$('artstats').hide();" style="float:right">Hide</span>
+<br/><br/>
+           <div style="height: 270px">
+           <div id="statgraph" style="height: 250px; min-width: 500px"></div>
+           </div>
+<br/><br/>
+</div>
+
+<!--ARTICLE REPORTING MESSAGE-->
+
+
+<!--ARTICLE ATTACHED RESOURCE FILE-->
+
+   <div style="background-color:rgb(240, 248, 241)">
+   	  <img src="/public/style_images/attach_article.png" style="margin-left:-5px">
+	  <a href='http://www.gamedev.net/uploads/1caeef1c1860db325c17766b78324633.zip'><b>Download attached article resource</b></a>
+   </div>
+   <br/>
+
+
+		
+
+<div style="margin-left: 15px; margin-bottom: 20px; float: right; width: 250px;">
+  <img src='/interface/esi/track.php?a=3176&cb=723e620c5234b6152382f99330869a3b&r=a5cef4db2ceadbdbe26dda561e7b9fff.jpg' style='float:right; margin-bottom: 10px; margin-left: 15px;border: solid 1px black;'  width='250' height='150' />
+
+  <a href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.gamedev.net%2Fpage%2Fresources%2F_%2Ftechnical%2Fgeneral-programming%2Ffinite-state-machines-and-regular-expressions-r3176%3F"><img src="/images/articles/icons/facebook.png" style="float:left;margin-right:5px;"></a>
+  <a href="https://twitter.com/intent/tweet?text=Finite+State+Machines+and+Regular+Expressions&url=http%3A%2F%2Fwww.gamedev.net%2Fpage%2Fresources%2F_%2Ftechnical%2Fgeneral-programming%2Ffinite-state-machines-and-regular-expressions-r3176%3F"><img src="/images/articles/icons/twitter.png" style="float:left;margin-right:5px;"></a>
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Fwww.gamedev.net%2Fpage%2Fresources%2F_%2Ftechnical%2Fgeneral-programming%2Ffinite-state-machines-and-regular-expressions-r3176%3F"><img src="/images/articles/icons/googleplus.png" style="float:left;margin-right:5px;"></a>
+  <a href="http://www.gamedev.net/index.php?app=forums&module=extras&section=forward&url=aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Nj8,&title=Finite+State+Machines+and+Regular+Expressions"><img src="/images/articles/icons/email.png" style="float:left;margin-right:5px;"></a>
+  <a href="http://www.reddit.com/submit?url=http%3A%2F%2Fwww.gamedev.net%2Fpage%2Fresources%2F_%2Ftechnical%2Fgeneral-programming%2Ffinite-state-machines-and-regular-expressions-r3176%3F"><img src="/images/articles/icons/reddit.png" style="float:left;margin-right:5px;"></a>
+  
+</div>
+		
+                
+
+<div class="ipsType_textblock ipsPad">
+<h1>Introduction</h1><br />I want to present an important and interesting topic in computer science, the Finite State Machine (FSM). In this part we start with the basics, gaining an understanding of what FSMs are and what they can be used for. This part is very elementary, so please be patient. In subsequent parts things will become much more complicated and interesting.<br /><br /><p class="message note">
+
+<strong>Note:</strong>&nbsp;&nbsp;<br />This article combines a series of 6 works originally published to GameDev.net throughout 2004 entitled "Algorithmic Forays". It was collected together and revised by the original author in 2008 and published in the book <a href='http://www.amazon.com/Advanced-Game-Programming-GameDev-net-Collection/dp/1598638068/ref=pd_sim_b_2' class='bbc_url' title='External link' rel='nofollow external'>Advanced Game Programming: A GameDev.net Collection</a>, which is one of 4 books collecting both popular GameDev.net articles and new original content in print format.<br />
+				
+</p><br /><h1>Finite State Machines - What are they?</h1><br />A finite state machine is a conceptual model that can used to describe how many things work. Think about a light bulb for instance. The circuit consists of a switch that can be ON or OFF, a few wires and the bulb itself. At any moment in time the bulb is in some state - it is either turned on (emits light) or turned off (no visible effect). For a more focused discussion, let's assume that we have two buttons - one for "turn on" and one for "turn off".<br /><br />How would you describe the light bulb circuit? You'd probably put it like this: When it's dark and I press ON, the bulb starts emitting light. Then if I press ON again, nothing changes. If I press OFF the bulb is turned off. Then if I press OFF again, nothing changes.<br /><br />This description is very simple and intuitive, but in fact it describes a state machine!<br /><br />Think of it the following way: we have a machine (the bulb) with two states, ON and OFF. We have two inputs, an ON switch and an OFF switch. If we are in state ON, pressing ON changes nothing, but pressing OFF moves the machine to state OFF. If we are in state OFF, pressing OFF changes nothing, but pressing ON moves the machine to state ON.<br /><br />The above is a rephrasing of the first description, just a little more formal. It is, in fact, a formal description of a state machine. Another customary way to describe state machines is with a diagram (people like diagrams and drawings more than words for some insights):<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16066-0-54381500-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-84996300-1370053229.jpg" title="AdvGameProg_FSMandRDP_Bendersky_1.jpg - Size: 50.4KB, Downloads: 35"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-84996300-1370053229_thumb.jpg" id='ipb-attach-img-16066-0-54381500-1458908582' style='width:480;height:264' class='attach' width="480" height="264" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_1.jpg" /></a>
+<br /></p><br />Textual descriptions can become quite wordy, and a simple diagram like this can contain a lot of information. Note how states are represented by circles, and transitions by arrows. This is almost all one needs to know, which makes diagrams very descriptive. This state machine can also be translated to (C++) code:<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+...
+...
+typedef enum {ON, OFF} bulb_state;
+typedef enum {TURN_ON, TURN_OFF} switch_command;
+...
+...
+bulb_state state;
+switch_command command;
+switch (state)
+{
+  case ON:
+    if (command == TURN_ON)
+    {
+    }
+    else if (command == TURN_OFF)
+    {
+      state = OFF;
+    }
+    break;
+  case OFF:
+    if (command == TURN_ON)
+    {
+      state = ON;
+    }
+    else if (command == TURN_OFF)
+    {
+    }
+    break;
+    default:
+      assert(0);
+}
+</pre><br />If code such as this looks familiar, it's hardly surprising. Many of us write state machines in our code without even noticing. Most of the state machines we write are "implicit", in the sense that there isn't a single switch statement that handles the whole machine, but rather it's distributed throughout the whole program. If, additionally, the state variables don't have the word "state" in their name, guessing that a certain code is a state machine in disguise is even harder.<br /><br />Many programs we write are state machines. Think about a chess game for a moment. If we write a program to play chess against human beings, it's actually a state machine in some sense. It waits for the human to move - an idle state. Once the human moves, it goes into active state of "thinking" about a move to make. A game can have an "end" state such as a victory for one side or a draw. If we think of a GUI for a chess game, the state machine is even more obvious. There is a basic state, when it's a human's move. If a human clicks on some piece, we go into the "clicked" state. In this state, a click on an empty tile may produce a move by the piece. Note that if we click on an empty tile in the "basic" state (no pieces selected), nothing happens. Can you see an obvious state machine here?<br /><br /><h2>Finite?</h2><br />In the beginning of this part, I said we were going to discuss FSMs. By now I hope you already know what a state machine is, but what has "finite" got to do with it?<br /><br />Well, our computers are finite. There's only so much memory (even if it's quite large these days). Therefore, the applications are finite. Finite = Limited. For state machines it means that the amount of states is limited. 1 is limited, 2 is limited, but 107 is also limited, though quite large.<br /><br />This point may seem banal to some of you, but it is important to emphasize. So now you know what a FSM is: a state machine with a finite number of states. It can be inferred that all state machines implemented in computer hardware and software must be FSMs.<br /><br /><h2>Employing state machines for our needs</h2><br />State machines can be also used explicitly. We can benefit a lot from knowingly incorporating state machines in our code. First and foremost, it's a great way to reason about difficult problems. If you see that your code or a part of it can actually be in several states, with inputs affecting these states and outputs resulting from them, you can reason about this code using a state machine. Draw a diagram; visualizing always helps. With a diagram errors can be spotted more easily. Think about all the inputs to your code - what should they change in every state? Does your code cover all possibilities (all inputs in all states)? Are some state transitions illegal?<br /><br />Another use of state machines is for certain algorithms. In the next part you'll see how essential state machines are for a very common and important application: regular expressions.<br /><br /><h1>Regular expressions (regexes)</h1><br />Think of an identifier in C++ (such as <strong>this</strong>, <strong>temp_var2</strong>, <strong>assert</strong> etc.). How would you describe what qualifies for an identifier? Let's see if we remember... an identifier consists of letters, digits and the underscore character (_), and must start with a letter (it's possible to start with an underscore, but better not to, as these identifiers are reserved by the language). <br /><br />A regular expression is a notation that allows us to define such things precisely:<br /><br />letter (letter | digit | underscore) *<br /><br />In regular expressions, the vertical bar | means "or", the parentheses are used to group sub expressions (just like in math) and the asterisk (*) means "zero or more instances of the previous". So the regular expression above defines the set of all C++ identifiers (a letter followed by zero or more letters, digits or underscores). Let's see some more examples:<br /><ul class='bbc'><li><strong>abb*a</strong> - all words starting with a, ending with a, and having at least one b in-between. For example: "aba", "abba", "abbbba" are words that fit, but "aa" or "abab" are not. </li><li><strong>0|1|2|3|4|5|6|7|8|9</strong> - all digits. For example: "1" is a digit, "fx" is not. </li><li><strong>x(y|z)*(a|b|c)</strong> - all words starting with x, then zero or more y or z, and end with a, b or c. For example: "xa", "xya", "xzc", "xyzzzyzyyyzb". </li><li><strong>xyz</strong> - only the word "xyz". </li></ul>There is another symbol we'll use: <i>eps</i> (usually denoted with the Greek letter Epsilon) <i>eps</i> means "nothing". So, for example the regular expression for "either xy or xyz" is: <strong>xy(z|<i>eps</i>)</strong>.<br /><br />People familiar with regexes know that there are more complicated forms than * and |. However, anything can be built from *, | and <i>eps</i>. For instance, <strong>x?</strong> (zero or one instance of x) is a shorthand for <strong>(x|eps)</strong>. <strong>x+</strong> (one or more instances of x) is a shorthand for <strong>xx*</strong>. Note also the interesting fact that * can be represented with +, namely: <strong>x*</strong> is equivalent to <strong>(x+)|<i>eps</i></strong>.<br /><br />[Perl programmers and those familiar with Perl syntax (Python programmers, that would include you) will recognize <strong>eps</strong> as a more elegant alternative to the numerical notation {m, n} where both m and n are zero. In this notation, <strong>x*</strong> is equivalent to <strong>x{0,}</strong> (unbound upper limit), <strong>x+</strong> is <strong>x{1,}</strong> and all other cases can be built from these two base cases. - Ed.]<br /><br /><h2>Recognizing strings with regexes</h2><br />Usually a regex is implemented to solve some recognition problem. For example, suppose your application asks a question and the user should answer Yes or No. The legal input, expressed as a regex is <strong>(yes)|(no)</strong>. Pretty simple and not too exciting - but things can get much more interesting.<br /><br />Suppose we want to recognize the following regex: <strong>(a|b)*abb</strong>, namely all words consisting of a's and b's and ending with abb. For example: "ababb", "aaabbbaaabbbabb". Say you'd like to write the code that accepts such words and rejects others. The following function does the job:<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+bool recognize(string str)
+{
+  string::size_type len = str.length();
+  // can't be shorter than 3 chars
+  if (len &lt; 3)
+    return false;
+  // last 3 chars must be &quot;abb&quot;
+  if (str.substr(len - 3, 3) != &quot;abb&quot;)
+    return false;
+  // must contain no chars other than &quot;a&quot; and &quot;b&quot;
+  if (str.find_first_not_of(&quot;ab&quot;) != string::npos)
+    return false;
+  return true;
+}
+</pre><br />It's pretty clean and robust - it will recognize <strong>(a|b)*abb</strong> and reject anything else. However, it is clear that the techniques employed in the code are very "personal" to the regex at hand.<br /><br />If we slightly change the regex to <strong>(a|b)*abb(a|b)*</strong> for instance (all sequences of a's and b's that have abb somewhere in them), it would change the algorithm completely. (We'd then probably want to go over the string, a char at a time and record the appearance of abb. If the string ends and abb wasn't found, it's a rejection, etc.). It seems that for each regex, we should think of some algorithm to handle it, and this algorithm can be completely different from algorithms for other regexes.<br /><br />So what is the solution? Is there any standardized way to handle regexes? Can we even dream of a general algorithm that can produce a recognizer function given a regex? We sure can!<br /><br /><h2>FSMs to the rescue</h2><br />It happens so that Finite State Machines are a very useful tool for regular expressions. More specifically, a regex (any regex!) can be represented as an FSM. To show how, however, we must present two additional definitions (which actually are very logical, assuming we use a FSM for a regex).<br /><ul class='bbc'><li>A start state is the state in which a FSM starts. </li><li>An accepting state is a final state in which the FSM returns with some answer.</li></ul>It is best presented with an example:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16074-0-54405000-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-57361700-1370053816.jpg" title="AdvGameProg_FSMandRDP_Bendersky_2.jpg - Size: 45.44KB, Downloads: 36"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-57361700-1370053816_thumb.jpg" id='ipb-attach-img-16074-0-54405000-1458908582' style='width:480;height:411' class='attach' width="480" height="411" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_2.jpg" /></a>
+<br /></p><br />The start state 0 is denoted with a "Start" arrow. 1 is the accepting state (it is denoted with the double border). Now, try to figure out what regex this FSM represents.<br /><br />It actually represents <strong>xy*</strong> - x and then 0 or more of y. Do you see how? Note that x leads the FSM to state 1, which is the accepting state. Adding y keeps the FSM in the accepting state. If a x appears when in state 1, the FSM moves to state 2, which is non accepting and "stuck", since any input keeps the FSM in state 2 (because <strong>xy*</strong> rejects strings where a x comes after y-s). But what happens with other letters? For simplicity we'll now assume that for this FSM our language consists of solely x and y. If our input set would be larger (say the whole lowercase alphabet), we could define that each transition not shown (for instance, on input "z" in state 0) leads us into some "unaccepting" state.<br /><br />I will now present the general algorithm for figuring out whether a given FSM recognizes a given word. It's called "FSM Simulation". But first lets define an auxiliary function: <i>move(state, input)</i> returns the state resulting from getting <i>input</i> in state <i>state</i>. For the sample FSM above, move(0, X) is 1, move (0, Y) is 0, etc. So, the algorithm goes as follows:<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+state = start_state
+input = get_next_input
+while not end of input do
+  state = move(state, input)
+  input = get_next_input
+end
+if state is a final state
+  return &quot;ACCEPT&quot;
+else
+  return &quot;REJECT&quot;
+</pre><br />The algorithm is presented in very general terms and should be well understood. Lets "run" it on the simple <strong>xy*</strong> FSM, with the input "xyy". We start from the start state - 0; Get next input: x, end of input? not yet; move(0, x) moves us to state 1; input now becomes y; not yet end of input; move(1, y) moves us to state 1; exactly the same with the second y; now it's end of input; state 1 is a final state, so "ACCEPT";<br /><br />Piece of cake isn't it? Well, it really is! It's a straightforward algorithm and a very easy one for the computer to execute.<br /><br />Let's go back to the regex we started with - <strong>(a|b)*abb</strong>. Here is the FSM that represents (recognizes) it:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16075-0-54440600-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_3.jpg - Size: 29.72KB, Downloads: 28"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-30103200-1370053817_thumb.jpg" id='ipb-attach-img-16075-0-54440600-1458908582' style='width:480;height:199' class='attach' width="480" height="199" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_3.jpg" /></a>
+<br /></p><br />Although it is much more complicated than the previous FSM, it is still simple to comprehend. This is the nature of FSMs - looking at them you can easily characterize the states they can be in, what transitions occur, and when. Again, note that for simplicity our alphabet consists of solely "a" and "b".<br /><br />Paper and pencil is all you need to "run" the FSM Simulation algorithm on some simple string. I encourage you to do it, to understand better how this FSM relates to the <strong>(a|b)*abb</strong> regex.<br /><br />Just for example take a look at the final state - 3. How can we reach it? From 2 with the input b. How can we reach 2? From 1 with input b. How can we reach 1? Actually from any state with input a. So, "abb" leads us to accept a string, and it indeed fits the regex.<br /><br /><h2>Coding it the FSM way</h2><br />As I said earlier, it is possible to generate code straight from any regex. That is, given a regular expression, a general tool can generate the code that will correctly recognize all strings that fit the regex, and reject the others. Let's see what it takes...<br /><br />The task is indeed massive, but consider dividing it to two distinct stages:<br /><br /><ol class='bbc'><li>Convert the regex to a FSM </li><li>Write FSM code to recognize strings</li></ol><br />Hey, we already know how to do the second stage! It is actually the FSM Simulation algorithm we saw earlier. Most of the algorithm is the same from FSM to FSM (just dealing with input). The only part that changes is the "move" function, which represents the transition diagram of some FSM, and we learned how to code the transition function in the pvery basic, the technique is the same for any FSM!<br /><br />Let's now write down the full code that recognizes <strong>(a|b)*abb</strong>.<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+#include &lt;string&gt;
+using namespace std;
+typedef int     fsm_state;
+typedef char    fsm_input;
+bool is_final_state(fsm_state state)
+{
+  return (state == 3) ? true : false;
+}
+fsm_state get_start_state(void)
+{
+  return 0;
+}
+fsm_state move(fsm_state state, fsm_input input)
+{
+  // our alphabet includes only 'a' and 'b'
+  if (input != 'a' &amp;&amp; input != 'b')
+    assert(0);
+  switch (state)
+  {
+    case 0:
+      if (input == 'a')
+      {
+        return 1;
+      }
+      else if (input == 'b')
+      {
+        return 0;
+      }
+      break;
+    case 1:
+      if (input == 'a')
+      {
+        return 1;
+      }
+      else if (input == 'b')
+      {
+        return 2;
+      }
+      break;
+    case 2:
+      if (input == 'a')
+      {
+        return 1;
+      }
+      else if (input == 'b')
+      {
+        return 3;
+      }
+      break;
+    case 3:
+      if (input == 'a')
+      {
+        return 1;
+      }
+      else if (input == 'b')
+      {
+        return 0;
+      }
+      break;
+      default:
+        assert(0);
+  }
+}
+bool recognize(string str)
+{
+  if (str == &quot;&quot;)
+    return false;
+  fsm_state state = get_start_state();
+  string::const_iterator i = str.begin();
+  fsm_input input = *i;
+  while (i != str.end())
+  {
+    state = move(state, *i);
+    ++i;
+  }
+  if (is_final_state(state))
+    return true;
+  else
+    return false;
+}
+// simple driver for testing
+int main(int argc, char** argv)
+{
+  recognize(argv[1&#93;) ? cout &lt; 1 : cout &lt; 0;
+  return 0;
+}
+</pre><br />Take a good look at the <i>recognize</i> function. You should immediately see how closely it follows the FSM Simulation algorithm. The FSM is initialized to the start state, and the first input is read. Then, in a loop, the machine moves to its next state and fetches the next input, etc. until the input string ends. Eventually, we check whether we reached a final state.<br /><br />Note that this <i>recognize</i> function will be the same for <strong>any</strong> regex. The only functions that change are the trivial <i>is_final_state</i> and <i>get_start_state</i>, and the more complicated transition function <i>move</i>. But <i>move</i> is very structural - it closely follows the graphical description of the FSM. As you'll see later, such transition functions are easily generated from the description.<br /><br />So, what have we got so far? We know how to write code that runs a state machine on a string. What don't we know? We still don't know how to generate the FSM from a regex.<br /><br /><h1>DFA + NFA = FSM</h1><br />FSM, as you already know, stands for Finite State Machine. A more scientific name for it is FA - Finite Automaton (plural <i>automata</i>). Finite Automata can be classified into several categories, but the one we need for the sake of regex recognition is the notion of <i>determinism</i>. Something is deterministic when it involves no <i>chance</i> - everything is known and can be prescribed and simulated beforehand. On the other hand, nondeterminism is about chance and probabilities. It is commonly defined as "A property of a computation which may have more than one result". <br /><br />Thus, the world of FSMs can be divided to two: a deterministic FSM is called DFA (Deterministic Finite Automaton) and a nondeterministic FSM is called NFA (Nondeterministic Finite Automaton).<br /><br /><h2>NFA</h2><br />A <i>nondeterministic finite automaton</i> is a mathematical model that consists of:<br /><br /><ol class='bbc'><li>A set of states S </li><li>A set of input symbols A (the input symbol alphabet) </li><li>A transition function <i>move</i> that maps state-symbol pairs to sets of states </li><li>A state s0 that is the start state </li><li>A set of states F that are the final states </li></ol><br />I will now elaborate on a few fine points (trying to simplify and avoid mathematical implications). <br /><br />A NFA <i>accepts</i> an input string <strong>X</strong> if and only if there is some path in the transition graph from the start state to some accepting (final) state, such that the edge labels along this path spell out <strong>X</strong>. <br /><br />The definition of a NFA doesn't pose a restriction on the amount of states resulting in some input in some state. So, given we're in some state <strong>N</strong> it is completely legal (in a NFA) to transition to several different states given the input <strong>a</strong>. <br /><br />Furthermore, epsilon (<strong>eps</strong>) transitions are allowed in a NFA. That is, there may be a transition from state to state given "no input". <br /><br />I know this must sound very confusing if it's the first time you learn about NFAs, but an example I'll show a little later should make things more understandable.<br /><br /><h2>DFA</h2><br />By definition, a <i>deterministic finite automaton</i> is a special case of a NFA, in which <br /><br /><ol class='bbc'><li>No state has an <strong>eps</strong>-transition </li><li>For each state <strong>S</strong> and input <strong>a</strong>, there is at most one edge labeled <strong>a</strong> leaving <strong>S</strong>. </li></ol><br />You can immediately see that a DFA is a more "normal" FSM. In fact the FSMs we were discussing earlier are DFAs.<br /><br /><h2>Recognizing regexes with DFAs and with NFAs</h2><br />To make this more tolerable, consider an example comparing the DFA and the NFA for the regex <strong>(a|b)*abb</strong> we saw earlier. Here is the DFA:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16075-0-54451200-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_3.jpg - Size: 29.72KB, Downloads: 28"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-30103200-1370053817_thumb.jpg" id='ipb-attach-img-16075-0-54451200-1458908582' style='width:480;height:199' class='attach' width="480" height="199" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_3.jpg" /></a>
+<br /></p><br />And this is the NFA:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16076-0-54481100-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-73208900-1370053817.jpg" title="AdvGameProg_FSMandRDP_Bendersky_4.jpg - Size: 19.7KB, Downloads: 33"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-73208900-1370053817_thumb.jpg" id='ipb-attach-img-16076-0-54481100-1458908582' style='width:480;height:151' class='attach' width="480" height="151" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_4.jpg" /></a>
+<br /></p><br />Can you see a NFA unique feature in this diagram? Look at state 0. When the input is <strong>a</strong>, where can we move? To state 0 and state 1 - a multiple transition, something that is illegal in a DFA. Take a minute to convince yourself that this NFA indeed accepts <strong>(a|b)*abb</strong>. For instance, consider the input string <strong>abababb</strong>. Recall how NFA's <i>acceptance</i> of a string is defined. So, is there a path in the NFA graph above that "spells out" <strong>abababb</strong>? There indeed is. The path will stay in state 0 for the first 4 characters, and then will move to states 1-&gt;2-&gt;3. Consider the input string <strong>baabab</strong>. Is there a path that spells out this string? No, there isn't, as in order to reach the final state, we must go through <strong>abb</strong> in the end, which the input string lacks.<br /><br />Both NFAs and DFAs are important in computer science theory and especially in regular expressions. Here are a few points of difference between these constructs:<br /><ul class='bbc'><li>It is simpler to build a NFA directly from a regex than a DFA. </li><li>NFAs are more compact that DFAs. You must agree that the NFA diagram is much simpler for the <strong>(a|b)*abb </strong> regex. Due to its definition, a NFA doesn't explicitly need many of the transitions a DFA needs. Note how elegantly state 0 in the NFA example above handles the <strong>(a|b)*</strong> alternation of the regex. In the DFA, the char <strong>a</strong> can't both keep the automaton in state 0 and move it to state 1, so the many transitions on <strong>a</strong> to state 1 are required from any other state. </li><li>The compactness also shows in storage requirements. For complex regexes, NFAs are often smaller than DFAs and hence consume less space. There are even cases when a DFA for some regex is exponential in size (while an NFA is always linear) - though this is quite rare. </li><li>NFAs can't be directly simulated in the sense DFAs can. This is due to them being nondeterministic "beings", while our computers are deterministic. They must be simulated using a special technique that generates a DFA from their states "on the fly". More on this later. </li><li>The previous leads to NFAs being less time efficient than DFAs. In fact, when large strings are searched for regex matches, DFAs will almost always be preferable. </li></ul>There are several techniques involving DFAs and NFAs to build recognizers from regexes: <br /><ul class='bbc'><li>Build a NFA from the regex. "Simulate" the NFA to recognize input. </li><li>Build a NFA from the regex. Convert the NFA to a DFA. Simulate the DFA to recognize input. </li><li>Build a DFA directly from the regex. Simulate the DFA to recognize input. </li><li>A few hybrid methods that are too complicated for our discussion. </li></ul>At first, I was determined to spare you from the whole DFA/NFA discussion and just use the third - direct DFA - technique for recognizer generation. Then, I changed my mind, for two reasons. First, the distinction between NFAs and DFAs in the regex world is important. Different tools use different techniques (for instance, Perl uses NFA while lex and egrep use DFA), and it is valuable to have at least a basic grasp of these topics. Second, and more important, I couldn't help falling to the charms of the NFA-from-regex construction algorithm. It is simple, robust, powerful and complete – in one word, beautiful.<br /><br />So, I decided to go for the second technique.<br /><br /><h1>Construction of a NFA from a regular expression</h1><br />Recall the basic building blocks of regular expressions: <strong>eps</strong> which represents "nothing" or "no input"; characters from the input alphabet (we used <strong>a</strong> and <strong>b</strong> most often here); characters may be concatenated, like this: <strong>abb</strong>; alternation <strong>a|b</strong> meaning <strong>a</strong> or <strong>b</strong>; the star <strong>*</strong> meaning "zero or more of the previous"; and grouping <strong>()</strong>.<br /><br />What follows is <i>Thompson's construction</i> - an algorithm that builds a NFA from a regex. The algorithm is syntax directed, in the sense that it uses the syntactic structure of the regex to guide the construction process.<br /><br />The beauty and simplicity of this algorithm is in its modularity. First, construction of trivial building blocks is presented.<br /><br />For <strong>eps</strong>, construct the NFA:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16077-0-54502000-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-13277800-1370053818.jpg" title="AdvGameProg_FSMandRDP_Bendersky_6.jpg - Size: 22.58KB, Downloads: 28"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-13277800-1370053818_thumb.jpg" id='ipb-attach-img-16077-0-54502000-1458908582' style='width:480;height:119' class='attach' width="480" height="119" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_6.jpg" /></a>
+<br /></p><br />Here <i>i</i> is a new start state and <i>f</i> is a new accepting state. It's easy to see that this NFA recognizes the regex <strong>eps</strong>.<br /><br />For some <strong>a</strong> from the input alphabet, construct the NFA:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16078-0-54536200-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_7.jpg - Size: 22.64KB, Downloads: 26"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-45037100-1370053818_thumb.jpg" id='ipb-attach-img-16078-0-54536200-1458908582' style='width:480;height:119' class='attach' width="480" height="119" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_7.jpg" /></a>
+<br /></p><br />Again, it's easy to see that this NFA recognizes the trivial regex <strong>a</strong>.<br /><br />Now, the interesting part of the algorithm: an inductive construction of complex NFAs from simple NFAs. More specifically, given that <i>N(s)</i> and <i>N(t)</i> are NFA's for regular expressions <i>s</i> and <i>t</i>, we'll see how to combine the NFAs <i>N(s)</i> and <i>N(t)</i> according to the combination of their regexes.<br /><br />For the regular expression <strong>s|t</strong>, construct the following composite NFA <i>N(s|t)</i>:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16079-0-54587600-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_8.jpg - Size: 44.32KB, Downloads: 26"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-81015300-1370053818_thumb.jpg" id='ipb-attach-img-16079-0-54587600-1458908582' style='width:480;height:280' class='attach' width="480" height="280" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_8.jpg" /></a>
+<br /></p><br />The <strong>eps</strong> transitions into and out of the simple NFAs assure that we can be in either of them when the match starts. Any path from the initial to the final state must pass through either <i>N(s)</i> or <i>N(t)</i> exclusively. Thus we see that this composite NFA recognizes <strong>s|t</strong>.<br /><br />For the regular expression <strong>st</strong> (<strong>s</strong> and then <strong>t</strong>), construct the composite NFA <i>NFA(st)</i>:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16080-0-54635200-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_9.jpg - Size: 32.27KB, Downloads: 27"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-39247500-1370053819_thumb.jpg" id='ipb-attach-img-16080-0-54635200-1458908582' style='width:480;height:128' class='attach' width="480" height="128" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_9.jpg" /></a>
+<br /></p><br />The composite NFA will have the start state of <i>N(s)</i> and the end state of <i>N(t)</i>. The accepting (final) state of <i>N(s)</i> is merged with the start state of <i>N(t)</i>. Therefore, all paths going through the composite NFA must go through <i>N(s)</i> and then through <i>N(t)</i>, so it indeed recognizes <i>N(st)</i>.<br /><br />For the regular expression <strong>s*</strong>, construct the composite NFA <i>N(s*)</i>:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16081-0-54686300-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_10.jpg - Size: 32.15KB, Downloads: 11"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-72076200-1370053819_thumb.jpg" id='ipb-attach-img-16081-0-54686300-1458908582' style='width:480;height:222' class='attach' width="480" height="222" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_10.jpg" /></a>
+<br /></p><br />Note how simply the notion of "zero or more" is represented by this NFA. From the initial state, either "nothing" is accepted with the <strong>eps</strong> transition to the final state or the "more than" is accepted by going into <i>N(s)</i>. The <strong>eps</strong> transition inside <i>N(s)</i> denotes that <i>N(s)</i> can appear again and again.<br /><br />For the sake of completeness: a parenthesized regular expression <strong>(s)</strong> has the same NFA as <strong>s</strong>, namely<i> N(s)</i>.<br /><br />As you can see, the algorithm covers all the building blocks of regular expressions, denoting their translations into NFAs.<br /><br /><h2>An example</h2><br />If you follow the algorithm closely, the following NFA will result for (our old friend,) the regex <strong>(a|b)*abb</strong>:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16082-0-54737200-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_11.jpg - Size: 29.11KB, Downloads: 27"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-20849400-1370053820_thumb.jpg" id='ipb-attach-img-16082-0-54737200-1458908582' style='width:480;height:186' class='attach' width="480" height="186" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_11.jpg" /></a>
+<br /></p><br />Sure, it is much larger than the NFA we saw earlier for recognizing the same regex, but this NFA was automatically generated from a regex description using <i>Thompson's construction</i>, rather than crafted by hand.<br /><br />Let's see how this NFA was constructed: <br />First, it's easy to note that states 2 and 3 are the basic NFA for the regex <strong>a</strong>. <br /><br />Similarly, states 4 and 5 are the NFA for <strong>b</strong>. <br /><br />Can you see the <strong>a|b</strong>? It's clearly states 1,2,3,4,5,6 (without the <strong>eps</strong> transition from 6 to 1). <br /><br />Parenthesizing <strong>(a|b)</strong> doesn't change the NFA <br /><br />The addition of states 0 and 7, plus the <strong>eps</strong> transition from 6 to 1 is the star on <i>NFA(a|b)</i>, namely states 0 - 7 represent <strong>(a|b)*</strong>. <br /><br />The rest is easy. States 8 - 10 are simply the concatenation of <strong>(a|b)*</strong> with <strong>abb</strong>.<br /><br />Try to run a few strings through this NFA until you convince yourself that it indeed recognizes <strong>(a|b)*abb</strong>. Recall that a NFA recognizes a string when the string's characters can be spelled out on some path from the initial to the final state.<br /><br /><h2>Implementation of a simple NFA</h2><br />At last, let's get our hands on some code. Now that we know the theory behind NFA-from-regex construction, it's clear that we will be doing some NFA manipulations. But how will we represent NFAs in code?<br /><br />NFA is not a trivial concept, and there are full-blown implementations for general NFAs that are far too complex for our needs. My plan is to code as simple an implementation as possible - one that will be enough for our needs and nothing more. After all, the regex recognizing engine is not supposed to expose its NFAs to the outer world - for us a NFA is only an intermediate representation of a regular expression, which we want to simulate in order to "accept" or "reject" input strings.<br /><br />My philosophy in such cases is the KISS principle: "Keep It Simple, Stupid". The goal is first to code the simplest implementation that fits my needs. Later, I have no problem refactoring parts of the code and inserting new features, on an as-needed basis.<br /><br />A very simple NFA implementation is now presented. We will build upon it later, and for now it is enough just to demonstrate the concept. Here is the interface:<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+#ifndef NFA_H
+#define NFA_H
+#include &lt;vector&gt;
+using namespace std;
+// Convenience types and constants
+typedef unsigned state;
+typedef char input;
+enum {EPS = -1, NONE = 0};
+class NFA
+{
+  public:
+    // Constructed with the NFA size (amount of
+    // states), the initial state and the final state
+    NFA(unsigned size_, state initial_, state final_);
+    // Adds a transition between two states
+    void add_trans(state from, state to, input in);
+    // Prints out the NFA
+    void show(void);
+  private:
+    bool is_legal_state(state s);
+    state initial;
+    state final;
+    unsigned size;
+    vector&lt;vector&lt;input&gt; &gt; trans_table;
+};
+#endif // NFA_H
+</pre><br />As promised, the public interface is kept trivial, for now. All we can do is create a NFA object (specifying the amount of states, the start state and the final state), add transitions to it, and print it out. This NFA will then consist of states 0 .. size-1, with the given transitions (which are single characters). Note that we use only one final state for now, for the sake of simplicity. Should we need more than one, it won't be difficult to add.<br /><br />A word about the implementation: I don't want to go deep into graph-theory here (if you're not familiar with the basics, a web search can be very helpful), but basically a NFA is a directed graph. It is most common to implement a graph using either a matrix or an array of linked lists. The first implementation is more speed efficient, the second is better space-wise. For our NFA I picked the matrix (vector of vectors), mostly because (in my opinion) it is simpler.<br /><br />The classic matrix implementation of a graph has 1 in cell (<i>i</i>, <i>j</i>) when there is an edge between vertex <i>i</i> and vertex <i>j</i>, and 0 otherwise.<br /><br />A NFA is a special graph, in the sense that we are interested not only in whether there is an edge, but also in the condition for the edge (the input that leads from one state to another in FSM terminology). Thus, our matrix holds inputs (a nickname for chars, as you can see). So, for instance, '<i>c</i>' in trans_table[i][j] means that the input '<i>c</i>' leads from state <i>i</i> to state <i>j</i> in our NFA.<br /><br />Here is the implementation of the NFA class:<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;cassert&gt;
+#include &lt;cstdlib&gt;
+#include &quot;nfa.h&quot;
+using namespace std;
+NFA::NFA(unsigned size_, state initial_, state final_)
+{
+  size = size_;
+  initial = initial_;
+  final = final_;
+  assert(is_legal_state(initial));
+  assert(is_legal_state(final));
+  // Initialize trans_table with an &quot;empty graph&quot;,
+  // no transitions between its states
+  for (unsigned i = 0; i &lt; size; ++i)
+  {
+    vector&lt;input&gt; v;
+    for (unsigned j = 0; j &lt; size; ++j)
+    {
+      v.push_back(NONE);
+    }
+    trans_table.push_back(v);
+  }
+}
+bool NFA::is_legal_state(state s)
+{
+  // We have 'size' states, numbered 0 to size-1
+  if (s &lt; 0 || s &gt;= size)
+    return false;
+  return true;
+}
+void NFA::add_trans(state from, state to, input in)
+{
+  assert(is_legal_state(from));
+  assert(is_legal_state(to));
+  trans_table[from&#93;[to&#93; = in;
+}
+void NFA::show(void)
+{
+  cout &lt; &quot;This NFA has &quot; &lt; size &lt; &quot; states: 0 - &quot; &lt; size - 1 &lt; endl;
+  cout &lt; &quot;The initial state is &quot; &lt; initial &lt; endl;
+  cout &lt; &quot;The final state is &quot; &lt; final &lt; endl &lt; endl;
+  for (unsigned from = 0; from &lt; size; ++from)
+  {
+    for (unsigned to = 0; to &lt; size; ++to)
+    {
+      input in = trans_table[from&#93;[to&#93;;
+      if (in != NONE)
+      {
+        cout &lt; &quot;Transition from &quot; &lt; from &lt; &quot; to &quot; &lt; to &lt; &quot; on input &quot;;
+        if (in == EPS)
+        {
+          cout &lt; &quot;EPS&quot; &lt; endl;
+        }
+        else
+        {
+          cout &lt; in &lt; endl;
+        }
+      }
+    }
+  }
+}
+</pre><br />The code is very simple, so you should have no problem understanding what every part of it does. To demonstrate, let's see how we would use this class to create the NFA for <strong>(a|b)*abb</strong> - the one we built using <i>Thompson's construction</i> earlier (only the driver code is included):<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+#include &quot;nfa.h&quot;
+int main()
+{
+  NFA n(11, 0, 10);
+  n.add_trans(0, 1, EPS);
+  n.add_trans(0, 7, EPS);
+  n.add_trans(1, 2, EPS);
+  n.add_trans(1, 4, EPS);
+  n.add_trans(2, 3, 'a');
+  n.add_trans(4, 5, 'b');
+  n.add_trans(3, 6, EPS);
+  n.add_trans(5, 6, EPS);
+  n.add_trans(6, 1, EPS);
+  n.add_trans(6, 7, EPS);
+  n.add_trans(7, 8, 'a');
+  n.add_trans(8, 9, 'b');
+  n.add_trans(9, 10, 'b');
+  n.show();
+  return 0;
+}
+</pre><br />This would (quite expectedly) result in the following output:<br /><br /><tt>This NFA has 11 states: 0 - 10<br />The initial state is 0<br />The final state is 10<br />Transition from 0 to 1 on input EPS<br />Transition from 0 to 7 on input EPS<br />Transition from 1 to 2 on input EPS<br />Transition from 1 to 4 on input EPS<br />Transition from 2 to 3 on input a<br />Transition from 3 to 6 on input EPS<br />Transition from 4 to 5 on input b<br />Transition from 5 to 6 on input EPS<br />Transition from 6 to 1 on input EPS<br />Transition from 6 to 7 on input EPS<br />Transition from 7 to 8 on input a<br />Transition from 8 to 9 on input b<br />Transition from 9 to 10 on input b</tt><br /><br />As I mentioned earlier: as trivial as this implementation may seem at the moment, it is the basis we will build upon later. Presenting it in small pieces will, hopefully, make the learning curve of this difficult subject less steep for you.<br /><br /><h1>Implementing Thompson's Construction</h1><br />Thompson's Construction tells us how to build NFAs from trivial regular expressions and then compose them into more complex NFAs. Let's start with the basics: <br /><br /><h2>The simplest regular expression</h2><br />The most basic regular expression is just some single character, for example <strong>a</strong>. The NFA for such a regex is:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16078-0-54546500-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_7.jpg - Size: 22.64KB, Downloads: 26"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-45037100-1370053818_thumb.jpg" id='ipb-attach-img-16078-0-54546500-1458908582' style='width:480;height:119' class='attach' width="480" height="119" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_7.jpg" /></a>
+<br /></p><br />Here is the implementation: <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+// Builds a basic, single input NFA
+NFA build_nfa_basic(input in)
+{
+  NFA basic(2, 0, 1);
+  basic.add_trans(0, 1, in);
+  return basic;
+}
+</pre><br />Just to remind you about our NFA implementation: The first line of the function creates a new (with no transitions yet) NFA of size 2 (that is: with 2 states), and sets state 0 to be the initial state and state 1 to be the final state. The second line adds a transition to the NFA that says "<strong>in</strong> moves from state 0 to state 1". That's it - a simple regex, a simple construction procedure. <br /><br />Note that this procedure is suited for the construction of an <strong>eps</strong> transition as well. <br /><br /><h2>Some changes to the NFA class</h2><br />The previous implementation of a simple NFA class was just a starting point and we have quite a few changes to make. <br /><br />First of all, we need direct access to all of the class's data. Instead of providing get and set accessors (which I personally dislike), all of the class members (size, initial, final and trans_table) have been made public. <br /><br />Recall what I told you about the internal representation inside the NFA class - it's a matrix representing the transition table of a graph. For each <i>i</i> and <i>j</i>, trans_table[i][j] is the input that takes the NFA from state <i>i</i> to state <i>j</i>. It's NONE if there's no such transition (hence a lot of space is wasted - the matrix representation, while fast, is inefficient in memory). <br /><br />Several new operations were added to the NFA class for our use in the NFA building functions. Their implementation can be found in nfa.cpp (included in the source code attached to this article). For now, try to understand how they work (it's really simple stuff), later you'll see why we need them for the implementation of various Thompson Construction stages. It may be useful to have the code of nfa.cpp in front of your eyes, and to follow the code for the operations while reading these explanations. Here they are: <br /><br />append_empty_state - I want to append a new, empty state to the NFA. This state will have no transitions to it and no transitions from it. If this is the transition table before the appending (a sample table with size 5 - states 0 to 4):<br /><p style='text-align:center'>			<br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16086-0-54840900-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-20001700-1370059504.png" title="table.png - Size: 1.39KB, Downloads: 26"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-20001700-1370059504.png" id='ipb-attach-img-16086-0-54840900-1458908582' style='width:183;height:186' class='attach' width="183" height="186" alt="Attached Image: table.png" /></a>
+<br /></p><br />Then this is the table after the appending:<br /><p style='text-align:center'>			<br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16087-0-54862500-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-41997200-1370059504.png" title="table2.png - Size: 1.67KB, Downloads: 26"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-41997200-1370059504.png" id='ipb-attach-img-16087-0-54862500-1458908582' style='width:215;height:217' class='attach' width="215" height="217" alt="Attached Image: table2.png" /></a>
+<br /></p><br />The shaded cells are the transitions of the original table (be they empty or not), and the white cells are the new table cells - containing NONE.<br /><br />shift_states - I want to rename all NFA's states, shifting them "higher" by some given number. For instance, if I have 5 states numbered 0 - 4, and I want to have the same states, just named 2 - 6, I will call shift_states(2), and will get the following table:<br /><p style='text-align:center'>			<br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16088-0-54885400-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-60650200-1370059504.png" title="table3.png - Size: 1.89KB, Downloads: 27"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-60650200-1370059504.png" id='ipb-attach-img-16088-0-54885400-1458908582' style='width:244;height:245' class='attach' width="244" height="245" alt="Attached Image: table3.png" /></a>
+<br /></p><br />fill_states - I want to copy the states of some other NFA into the first table cells of my NFA. For instance, if I take the shifted table from above, and fill its first two states with a new small NFA, I will get (the new NFA's states are darkest):<br /><p style='text-align:center'>			<br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16089-0-54913100-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-74344300-1370059504.png" title="table4.png - Size: 1.71KB, Downloads: 32"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-74344300-1370059504.png" id='ipb-attach-img-16089-0-54913100-1458908582' style='width:244;height:245' class='attach' width="244" height="245" alt="Attached Image: table4.png" /></a>
+<br /></p><br />Note that using fill_states after shift_states is not incidental. These two operations were created to be used together - to concatenate two NFAs. You'll see how they are employed shortly.<br /><br />Now I will explain how the more complex operations of Thompson's Construction are implemented. You should understand how the operations demonstrated above work, and also have looked at their source code (a good example of our NFA's internal table manipulation). You may still lack the "feel" of why these operations are needed, but this will soon be covered. Just understand how they work, for now. <br /><br /><h2>Implementing alternation: a|b</h2><br />Here is the diagram of NFA alternation from earlier:<br /><p style='text-align:center'>			<br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16079-0-54598300-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_8.jpg - Size: 44.32KB, Downloads: 26"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-81015300-1370053818_thumb.jpg" id='ipb-attach-img-16079-0-54598300-1458908582' style='width:480;height:280' class='attach' width="480" height="280" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_8.jpg" /></a>
+<br /></p><br />Given two NFAs, we must build another one that includes all the states of both NFAs plus additional, unified initial and final states. The function that implements this in nfa.cpp is build_nfa_alter. Take a look at its source code now - it is well commented and you should be able to follow through all the steps with little difficulty. Note the usage of the new NFA operations to complete the task. First, the NFAs states are shifted to make room for the full NFA. fill_states is used to copy the contents of nfa1 to the unified NFA. Finally, append_empty_state is used to add another state at the end - the new final state. <br /><br /><h2>Implementing concatenation: ab</h2><br />Here is the diagram of NFA concatenation from earlier:<br /><p style='text-align:center'>			<br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16080-0-54645800-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_9.jpg - Size: 32.27KB, Downloads: 27"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-39247500-1370053819_thumb.jpg" id='ipb-attach-img-16080-0-54645800-1458908582' style='width:480;height:128' class='attach' width="480" height="128" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_9.jpg" /></a>
+<br /></p><br />Given two NFAs, we must build another one that includes all the states of both NFAs (note that nfa1's final and nfa2's initial states are overlapping). The function that implements this in nfa.cpp is build_nfa_concat. Just as in build_nfa_alter, the new NFA operations are used to construct, step by step, a bigger NFA that contains all the needed states of the concatenation. <br /><br /><h2>Implementing star: a*</h2><br />Here is the diagram of the NFA for a* from earlier:<br /><p style='text-align:center'>			<br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16081-0-54697200-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_10.jpg - Size: 32.15KB, Downloads: 11"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-72076200-1370053819_thumb.jpg" id='ipb-attach-img-16081-0-54697200-1458908582' style='width:480;height:222' class='attach' width="480" height="222" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_10.jpg" /></a>
+<br /></p><br />Although the diagram looks complex, the implementation of this construction is relatively simple, as you'll see in build_nfa_star. There's no need to shift states, because no two NFAs are joined together. There's only a creation of new initial and final states, and new <strong>eps</strong> transitions added to implement the star operation. <br /><br /><h2>Specialty of NFAs constructed by Thompson's Construction</h2><br />You might have observed that all the NFAs constructed by Thompson's Construction have some very specific behavior. For instance, all the basic building blocks for single letters are similar, and the rest of the constructions just create new links between these states to allow for the alternation, concatenation and star operations. These NFAs are also special implementation-wise. For instance, note that in our NFA implementation, the first state is always the initial, and the last state is always final. You may have noted that this is useful in several operations. <br /><br /><h2>A complete NFA construction implementation</h2><br />With these operations implemented, we now have a full NFA construction implementation in nfa.cpp! For instance, the regex <strong>(a|b)*abb</strong> can be built as follows: <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+NFA a = build_nfa_basic('a');
+NFA b = build_nfa_basic('b');
+NFA alt = build_nfa_alter(a, b);
+NFA str = build_nfa_star(alt);
+NFA sa = build_nfa_concat(str, a);
+NFA sab = build_nfa_concat(sa, b);
+NFA sabb = build_nfa_concat(sab, b);
+</pre><br />With these steps completed, sabb is the NFA representing <strong>(a|b)*abb</strong>. Note how simple it's to build NFAs this way! There's no need to specify individual transitions like we did before. In fact, it's not necessary to understand NFAs at all - just build the desired regex from its basic blocks, and that's it. <br /><br /><h2>Even closer to complete automation</h2><br />Though it has now become much simpler to construct NFAs from regular expressions, it's still not as automatic as we'd like it to be. One still has to explicitly specify the regex structure. A useful representation of structure is an expression tree. For example, the construction above closely reflects this tree structure:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16085-0-54820500-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-73193400-1370056646.jpg" title="AdvGameProg_FSMandRDP_Bendersky_13.jpg - Size: 52.73KB, Downloads: 31"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-73193400-1370056646_thumb.jpg" id='ipb-attach-img-16085-0-54820500-1458908582' style='width:480;height:592' class='attach' width="480" height="592" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_13.jpg" /></a>
+<br /></p><br />In this tree: . is concatenation, | is alternation, and * is star. So, the regex <strong>(a|b)*abb</strong> is represented here in a tree form, just like an arithmetic expression. <br /><br />Such trees in the world of parsing and compilation are called expression trees, or parse trees. For example, to implement an infix calculator (one that can calculate, for example: 3*4 + 5), the expressions are first turned into parse trees, and then these parse trees are walked to make the calculations. <br /><br />Note, this is, as always, an issue of representation. We have the regex in a textual representation: <strong>(a|b)*abb</strong> and we want it in NFA representation. Now we're wondering how to turn it from one representation to the other. My solution is to use an intermediate representation - a parse tree. Going from a regex to a parse tree is similar to parsing arithmetic expressions, and going from a parse tree to a NFA will be now demonstrated, using the Thompson's Construction building blocks described in this article.<br /><br /><h2>From a parse tree to a NFA</h2><br />A parse tree in our case is just a binary tree, since no operation has more than two arguments. Concatenation and alternations have two arguments, hence their nodes in the tree have two children. Star has one argument - hence only the left child. Chars are the tree leaves. Take a good look at the tree drawn above, you'll see this very clearly. <br /><br />Take a look at the file regex_parse.cpp from the source code archive on the book's companion website. It has a lot in it, but you only need to focus only on some specific things for now. First, let's look at the definition of parse_node:<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+typedef enum {CHR, STAR, ALTER, CONCAT} node_type;
+// Parse node
+struct parse_node
+{
+  parse_node(node_type type_, char data_, parse_node* left_, parse_node* right_) :
+    type(type_),
+    data(data_),
+    left(left_),
+    right(right_)
+  {
+  }
+  node_type type;
+  char data;
+  parse_node* left;
+  parse_node* right;
+};
+</pre><br />This is a completely normal definition of a binary tree node that contains data and some type by which it is identified. Let us ignore, for the moment, the question of how such trees are built from regexes (if you're very curious - it's all in regex_parse.cpp), and instead think about how to build NFAs from such trees. It's very straight forward since the parse tree representation is natural for regexes. Here is the code of the tree_to_nfa function from regex_parse.cpp: <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+NFA tree_to_nfa(parse_node* tree)
+{
+  assert(tree);
+  switch (tree-&gt;type)
+  {
+    case CHR:
+      return build_nfa_basic(tree-&gt;data);
+    case ALTER:
+      return build_nfa_alter(tree_to_nfa(tree-&gt;left), tree_to_nfa(tree-&gt;right));
+    case CONCAT:
+      return build_nfa_concat(tree_to_nfa(tree-&gt;left), tree_to_nfa(tree-&gt;right));
+    case STAR:
+      return build_nfa_star(tree_to_nfa(tree-&gt;left));
+    default:
+      assert(0);
+  }
+}
+</pre><br />Not much of a rocket science, is it? The power of recursion and trees allows us to build NFAs from parse trees in just 18 lines of code... <br /><br /><h2>From a regex to a parse tree</h2><br />If you've already looked at regex_parse.cpp, you surely noted that it contains quite a lot of code, much more than I've show so far. This code is the construction of parse trees from actual regexes (strings like <strong>(a|b)*abb</strong>). <br /><br />I really hate to do this, but I won't explain how this regex-to-tree code works. You'll just have to believe me it works (or study the code - it's there!). As a note, the parsing technique I employ to turn regexes into parse trees is called Recursive Descent parsing. It's an exciting topic and there is plenty of information available on it, if you are interested. <br /><br /><h1>Converting NFAs to DFAs</h1><br />The N in NFA stands for non-deterministic. Our computers, however, are utterly deterministic beasts, which makes "true" simulation of an NFA impossible. But we do know how to simulate DFAs. So, what's left is to see how NFAs can be converted to DFAs.<br /><br />The algorithm for constructing from an NFA a DFA that recognizes the same language is called "Subset Construction". The main idea of this algorithm is in the following observations: <br /><ul class='bbc'><li>In the transition table of an NFA, given a state and an input there's a set of states we can move to. In a DFA, however, there's only one state we can move to. </li><li>Because of <strong>eps</strong> transitions, even without an input there's a set of states an NFA can be in at any given moment. Not so with the DFA, for which we always know exactly in what state it is. </li><li>Although we can't know in which state from the sets described above the NFA is, the set is known. Therefore, we will represent each set of NFA states by a DFA state. The DFA uses its state to keep track of all possible states the NFA can be in after reading each input symbol.</li></ul>Take, for example, the familiar NFA of the <strong>(a|b)*abb</strong> regex (generated automatically by Thompson's Construction, with the code from the last column):<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16082-0-54751500-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_11.jpg - Size: 29.11KB, Downloads: 27"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-20849400-1370053820_thumb.jpg" id='ipb-attach-img-16082-0-54751500-1458908582' style='width:480;height:186' class='attach' width="480" height="186" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_11.jpg" /></a>
+<br /></p><br />The initial state of this NFA is 0... or is it ? Take a look at the diagram, and count in how many states this NFA can be <i>before</i> any input is read. If you remember the previous columns where I explained how <strong>eps</strong> transitions work, you should have no trouble noticing that initially, the NFA can be in any of the states {0, 1, 2, 4, 7}, because these are the states reachable by <strong>eps</strong> transitions from the initial state.<br /><br />Note: the set T is reachable by <strong>eps</strong> from itself <i>by definition</i> (the NFA doesn't have to take an <strong>eps</strong> transition, it can also stay in its current state). <br /><br />Now imagine we received the input <strong>a</strong>. What happens next? In which states can the NFA be now? This should be easy to answer. Just go over all the states the NFA can be in <i>before</i> the input, and see where the input <strong>a</strong> leads from them. This way, a new set emerges: {1, 2, 3, 4, 6, 7, 8}. I hope you understand why: initially, the NFA can be in states {0, 1, 2, 4, 7}. But from states 0, 1 and 4 there are no transitions on <strong>a</strong>. The only transitions on <strong>a</strong> from that set are from state 2 (to state 3) and from state 7 (to state 8). However, the states {3, 8} is an incomplete answer. There are <strong>eps</strong> transitions from these states - to states {1, 2, 4, 6, 7}, so the NFA can actually be in any of the states {1, 2, 3, 4, 6, 7, 8}. <br /><br />If you understand this, you understand mostly how the Subset Construction algorithm works. All that's left is the implementation details. But before we get to the implementation of the conversion algorithm itself, there are a couple of prerequisites. <br /><br /><h1>eps-closure</h1><br />Given N - an NFA and T - a set of NFA states, we would like to know which states in N are reachable from states T by <strong>eps</strong> transitions. <strong>eps-closure</strong> is the procedure that answers this question. Here is the algorithm: <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+algorithm eps-closure
+inputs: N - NFA, T - set of NFA states
+output: eps-closure(T) - states reachable from T by eps transitions
+  eps-closure(T) = T
+  foreach state t in T
+    push(t, stack)
+  while stack is not empty do
+    t = pop(stack)
+    foreach state u with an eps edge from t to u
+      if u is not in eps-closure(T)
+        add u to eps-closure(T)
+        push(u, stack)
+  end
+  return eps-closure(T)
+</pre><br />This algorithm iteratively finds all the states reachable by <strong>eps</strong> transitions from the states T. First, the states T themselves are added to the output. Then, one by one the states are checked for <strong>eps</strong> transitions, and the states these transitions lead to are also added to the output, and are pushed onto the stack (in order to be checked for <strong>eps</strong> transitions). The process proceeds iteratively, until no more states can be reached with <strong>eps</strong> transitions only. <br /><br />For instance, for the <strong>(a|b)*abb</strong> NFA above, eps-closure({0}) = {0, 1, 2, 4, 7}, eps-closure({8, 9}) = {8, 9}, etc. <br /><br />In the attached source code, the implementation of eps-closure is in the file subset_construct.cpp, function build_eps_closure. It follows the algorithm outlined above very closely, so you should have no trouble understanding it. <br /><br /><h2>move - a new NFA member function</h2><br />Given T - a set of NFA states, and A - an input, we would like to know which states in the NFA are reachable from T with the input A. This operation was implemented in the function move, in nfa.cpp (member of the NFA class). The function is very simple. It traverses the set T, and looks for transitions on the given input, returning the states that can be reached. It doesn't take into account the <strong>eps</strong> transitions from those states - there's eps-closure for that. <br /><br /><h2>Keeping track of the input language of an NFA</h2><br />For reasons that will soon become obvious, we must keep track of the input language used in the NFA. For example, for the regex <strong>(a|b)*abb</strong> the language is {a, b}. A new member was added to the NFA class for this purpose - inputs. Take a look at the implementation in nfa.cpp to see how it's managed. <br /><br /><h2>DFA implementation</h2><br />Since we intend to build DFAs in this column, we need a DFA implementation. A very basic implementation was coded in dfa.h - take a look at it now. The DFA's transition table is implemented with a map, that maps (state, input) pairs to states. For example, (t1, i) will be mapped to t2 if input i in state t1 leads to state t2. Note that it's not the same representation as the one I used for the NFA. There are two reasons for this difference: <br /><ul class='bbc'><li>I want you to see two different implementations of a graph (which is what a transition table is, as I told you before). Both are legitimate for certain purposes. </li><li>A little bit of cheating... I know which operations I'll need from the DFA, so I'm tailoring the representation to these operations. This is a very common programming trick - one should always think about the ways a data structure will be used before he designs its exact implementation.</li></ul>So take a look at dfa.h - the DFA implementation is very simple - only a transition table, a start state and a set of final states. There are also methods for showing the DFA and for simulating it... <br /><br />To remind you, this is the algorithm for DFA simulation : <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+algorithm dfa-simulate
+inputs: D - DFA, I - Input
+output: ACCEPT or REJECT
+  s = start state of D
+  i = get next input character from I
+  while not end of I do
+    s = state reached with input i from state s
+    i = get next input character from I
+  end
+  if s is a final state
+    return ACCEPT
+  else
+    return REJECT
+</pre><br />Let's now finally learn how the DFA is built. <br /><br /><h2>Subset Construction</h2><br />In the Introduction, I provided some observations about following NFA states, and gave an example. You saw that while it's impossible to know in what state an NFA is at any given moment, it's possible to know the set of states it can be in. Then, we can say with certainty that the NFA is in one of the states in this set, and not in any state that's not in the set.<br /><br />So, the idea of Subset Construction is to build a DFA that keeps track where the NFA can be. Each state in this DFA stands for a set of states the NFA can be in after some transition. "How is this going to help us?", you may ask yourself. Good question.<br /><br />Recall how we simulate a DFA (if you don't feel confident with this material, read the 2nd part of Algorithmic Forays again). When can we say that a DFA recognizes an input string? When the input string ends, we look at the state we're left in. If this is a final state - ACCEPT, if it's not a final state - REJECT.<br /><br />So, say that we have a DFA, each state of which represents a set of NFA states. Since a NFA will always "pick the correct path", we can assume that if the set contains a final state, the NFA will be in it, and the string is accepted. More formally: A DFA state D represents S - a set of NFA states. If (and only if) one or more of the states in S is a final state, then D is a final state. Therefore, if a simulation ends in D, the input string is accepted.<br /><br />So, you see, it's useful to keep track of sets of NFA states. This will allow us to correctly "simulate" an NFA by simulating a DFA that represents it.<br /><br />Here's the Subset Construction algorithm:<br /><br /><pre class='prettyprint lang-auto linenums:0'>
+algorithm subset-construction
+inputs: N - NFA
+output: D - DFA
+  add eps-closure(N.start) to dfa_states, unmarked
+  D.start = eps-closure(N.start)
+  while there is an unmarked state T in dfa_states do
+    mark(T)
+    if T contains a final state of N
+      add T to D.final
+    foreach input symbol i in N.inputs
+      U = eps-closure(N.move(T, i))
+      if U is not in dfa_states
+        add U to dfa_states, unmarked
+      D.trans_table(T, i) = U
+  end
+</pre><br />The result of this procedure is D - a DFA with a transition table, a start state and a set of final states (not incidentally just what we need for our DFA class...). <br /><br />Here are some points to help you understand how <strong>subset-construction</strong> works: <br /><ul class='bbc'><li>It starts by creating the initial state for the DFA. Since, as we saw in the Introduction, an initial state is really the NFA's initial state plus all the states reachable by <strong>eps</strong> transitions from it, the DFA initial state is the <strong>eps-closure</strong> of the NFA's initial state. </li><li>A state is "marked" if all the transitions from it were explored. </li><li>A state is added to the final states of the DFA if the set it represents contains the NFA's final state </li><li>The rest of the algorithm is a simple iterative graph search. Transitions are added to the DFA transition table for each symbol in the alphabet of the regex. So the DFA transition actually represents a transition to the <strong>eps-closure</strong> in each case. Recall once again: a DFA state represents a set of states the NFA can be in after a transition. </li></ul>This algorithm is implemented in the function subset_construct in subset_construct.cpp, take a look at it now. Here are some points about the implementation: <br /><ul class='bbc'><li>dfa_states from the algorithm is represented by two sets: marked_states and unmarked_states, with the obvious meanings. </li><li>Since DFA states are really sets of NFA states (see the state_rep typedef), something must be done about numbering them properly (we want a state to be represented by a simple number in the DFA). So, the dfa_state_num map takes care of it, with the numbers generated on-demand by gen_new_state. </li><li>The loop runs while the unmarked_states set is not empty. Then, "some" state is marked by taking it out from the unmarked set (the first member of the set is picked arbitrarily) and putting it into the marked set. </li></ul>I hope an example will clear it all up. Let's take our favorite regex - <strong>(a|b)*abb</strong>, and show how the algorithm runs on the NFA created from it. Here's the NFA again: <br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[]' id='ipb-attach-url-16082-0-54765200-1458908582' href="http://www.gamedev.net/uploads/" title="AdvGameProg_FSMandRDP_Bendersky_11.jpg - Size: 29.11KB, Downloads: 27"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-20849400-1370053820_thumb.jpg" id='ipb-attach-img-16082-0-54765200-1458908582' style='width:480;height:186' class='attach' width="480" height="186" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_11.jpg" /></a>
+<br /></p><br />Following the algorithm: The start state of the equivalent DFA is the <strong>eps-closure</strong> of NFA state 0, which is A = {0, 1, 2, 4, 7}. So, we enter into the loop and mark A. A doesn't contain a final state, so we don't add it to the DFA's final set. The input symbol alphabet of the regex <strong>(a|b)*abb</strong> is {a, b}, so first we compute eps-closure(move(A, a)). Let's expand this: <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+eps-closure(move({0, 1, 2, 4, 7}, a)) = eps-closure({3, 8}) = {1, 2, 3, 4, 6, 7, 8} 
+</pre><br />Let's call this set B. B is not a member of dfa_states yet, so we add it there, unmarked. We also create the DFA transition D.trans_table(A, a) = B. Now we're back to the inner loop, with the input b. Of all the states in set A, the only transition on b is from 4 to 5, so we create a new set: <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+C = eps-closure((move(A, b)) = eps-closure({5}) = {1, 2, 4, 5, 6, 7} 
+</pre><br />So C is added, unmarked, to dfa_states. Since all the alphabet symbols are done for A, we go back to the outer loop. Are there any unmarked states? Yes, there are B and C. So we pick B and go over the process again and again, until all the sets that are states of the DFA are marked. Then, the algorithm terminates, and D.trans_table contains all the relevant transitions for the DFA. The five different sets we get for DFA states are: <br /><br /><pre class='prettyprint lang-auto linenums:0'>
+A = {0, 1, 2, 4, 7}
+B = {1, 2, 3, 4, 6, 7, 8}
+C = {1, 2, 4, 5, 6, 7}
+D = {1, 2, 4, 5, 6, 7, 9}
+E = {1, 2, 4, 5, 6, 7, 10}
+</pre><br />A is the initial state of the DFA, since it contains the NFA initial state 0. E is obviously the only final state of the NFA, since it's the only one containing the NFA final state 10. If you follow the whole algorithm through and take note of the DFA transitions created, this is the resulting diagram:<br /><p style='text-align:center'><br /><a class='resized_img' rel='lightbox[a142660ebbe17966feaaaf743d0d0ca7]' id='ipb-attach-url-16083-0-54799700-1458908582' href="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-64983300-1370053820.jpg" title="AdvGameProg_FSMandRDP_Bendersky_14.jpg - Size: 37.67KB, Downloads: 30"><img src="http://www.gamedev.net/uploads/monthly_06_2013/ccs-209764-0-64983300-1370053820_thumb.jpg" id='ipb-attach-img-16083-0-54799700-1458908582' style='width:480;height:253' class='attach' width="480" height="253" alt="Attached Image: AdvGameProg_FSMandRDP_Bendersky_14.jpg" /></a>
+<br /></p><br />You can easily: <br /><ul class='bbc'><li>See that this is a DFA - no <strong>eps</strong> transitions, no more than a single transition on each input from a state.</li><li>Verify that it indeed recognizes the regular expression <strong>(a|b)*abb</strong></li></ul><br /><h1>Conclusion</h1><br />We've come a long way, and finally our mission is accomplished. We've created a real regular expression engine. It's not a complete engine like the one Lex or Perl have, but it's a start. The basis has been laid, the rest is just extensions. Let's see what we have:<br /><br /><ol class='bbc'><li>A regular expression is read into a parse tree (implemented in regex_parse.cpp) - I didn't actually explain how this part is done, but you can trust me (and I hope you verified!) that it works.</li><li>An NFA is built from the regular expression, using Thompson's Construction (implemented in nfa.h/cpp)</li><li>The NFA is converted to a DFA, using the Subset Construction algorithm (implemented in subset_construct.h/cpp and dfa.h)</li><li>The resulting DFA is simulated using the DFA simulation algorithm (implemented in dfa.h)</li></ol><br />A small main function is implemented in regex_parse.cpp. It reads a regex and a string as arguments, and says whether the string fits the regex. It does it by going through the steps mentioned above, so I advise you to take a look at it and make sure that you understand the order in which things are called.
+</div>
+
+
+
+<!--ARTICLE ATTACHED RESOURCE FILE-->
+
+<br/><br/>
+   <div style="background-color:rgb(240, 248, 241)">
+   	  <img src="/public/style_images/attach_article.png" style="margin-left:-5px">
+	  <a href='http://www.gamedev.net/uploads/1caeef1c1860db325c17766b78324633.zip'><b>Download attached article resource</b></a>
+   </div>
+   <br/>
+
+
+
+
+
+
+
+	</div>
+	
+	
+<br><br>
+
+
+
+
+        </div>
+    </div>
+  </div> <!-- end id=article -->
+
+
+
+<div class='ipsPad'>
+        
+                <div style='float: left'>
+                        
+                        
+
+	<ul class='topic_share left shareButtons ipsList_inline'>
+	
+		<li><a href="http://www.gamedev.net/index.php?sharelink=twitter;aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Ng,,;RmluaXRlIFN0YXRlIE1hY2hpbmVzIGFuZCBSZWd1bGFyIEV4cHJlc3Npb25z&amp;overrideApp=ccs" rel="nofollow" target="_blank" title="Share this link via Twitter" class='_slink' id='slink_twitter'><img src="http://www.gamedev.net/public/style_extra/sharelinks/twitter.png" /></a></li>
+	
+
+		
+				<li class='fbLike'><div class="fb-like" data-href="http://www.gamedev.net/page/resources/_/technical/general-programming/finite-state-machines-and-regular-expressions-r3176" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false" data-action="like"></div><div id="fb-root"></div></li>
+<script>
+window.fbAsyncInit = function() {
+	FB.init({
+		appId      : '128221277204697',
+		xfbml      : true,
+		version    : 'v2.1'
+	});
+};
+(function(d, s, id){
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) {return;}
+	js = d.createElement(s); js.id = id;
+	js.src = "//connect.facebook.net/en_US/sdk.js";
+	fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
+			
+	
+
+		
+				<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+	
+		{lang: 'en-GB'}
+	
+</script>
+<li><div class='googlePlusOne'><g:plusone count="false" size="small"></g:plusone></div></li>
+			
+	
+
+		<li><a href="http://www.gamedev.net/index.php?sharelink=digg;aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Ng,,;RmluaXRlIFN0YXRlIE1hY2hpbmVzIGFuZCBSZWd1bGFyIEV4cHJlc3Npb25z&amp;overrideApp=ccs" rel="nofollow" target="_blank" title="Share this link via Digg" class='_slink' id='slink_digg'><img src="http://www.gamedev.net/public/style_extra/sharelinks/digg.png" /></a></li>
+	
+
+		
+	
+
+		<li><a href="http://www.gamedev.net/index.php?sharelink=reddit;aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Ng,,;RmluaXRlIFN0YXRlIE1hY2hpbmVzIGFuZCBSZWd1bGFyIEV4cHJlc3Npb25z&amp;overrideApp=ccs" rel="nofollow" target="_blank" title="Share this link via Reddit" class='_slink' id='slink_reddit'><img src="http://www.gamedev.net/public/style_extra/sharelinks/reddit.png" /></a></li>
+	
+
+		
+	
+
+		<li><a href="http://www.gamedev.net/index.php?sharelink=email;aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Ng,,;RmluaXRlIFN0YXRlIE1hY2hpbmVzIGFuZCBSZWd1bGFyIEV4cHJlc3Npb25z&amp;overrideApp=ccs" rel="nofollow" target="_blank" title="Share this link via Email" class='_slink' id='slink_email'><img src="http://www.gamedev.net/public/style_extra/sharelinks/email.png" /></a></li>
+	
+
+		<li><a href="http://www.gamedev.net/index.php?sharelink=print;aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Ng,,;RmluaXRlIFN0YXRlIE1hY2hpbmVzIGFuZCBSZWd1bGFyIEV4cHJlc3Npb25z&amp;overrideApp=ccs" rel="nofollow" target="_blank" title="Print" class='_slink' id='slink_print'><img src="http://www.gamedev.net/public/style_extra/sharelinks/print.png" /></a></li>
+	
+
+		<li><a href="http://www.gamedev.net/index.php?sharelink=download;aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Ng,,;RmluaXRlIFN0YXRlIE1hY2hpbmVzIGFuZCBSZWd1bGFyIEV4cHJlc3Npb25z&amp;overrideApp=ccs" rel="nofollow" target="_blank" title="Download" class='_slink' id='slink_download'><img src="http://www.gamedev.net/public/style_extra/sharelinks/download.png" /></a></li>
+	
+
+		<li><a href="http://www.gamedev.net/index.php?sharelink=blogthis;aHR0cDovL3d3dy5nYW1lZGV2Lm5ldC9wYWdlL3Jlc291cmNlcy9fL3RlY2huaWNhbC9nZW5lcmFsLXByb2dyYW1taW5nL2Zpbml0ZS1zdGF0ZS1tYWNoaW5lcy1hbmQtcmVndWxhci1leHByZXNzaW9ucy1yMzE3Ng,,;RmluaXRlIFN0YXRlIE1hY2hpbmVzIGFuZCBSZWd1bGFyIEV4cHJlc3Npb25z&amp;overrideApp=ccs" rel="nofollow" target="_blank" title="Share this link via Blog This" class='_slink' id='slink_blogthis'><img src="http://www.gamedev.net/public/style_extra/sharelinks/blogthis.png" /></a></li>
+	
+	</ul>
+	<script type="text/javascript">
+		ipb.sharelinks.url   = "http://www.gamedev.net/page/resources/_/technical/general-programming/finite-state-machines-and-regular-expressions-r3176";
+		ipb.sharelinks.title = "Finite State Machines and Regular Expressions";
+		ipb.sharelinks.bname = "GameDev.net";
+	</script>
+
+                </div>
+        
+        
+        <br style="clear: both" />
+</div>
+
+<br style="clear: both" />
+<span style='font-size:18px; font-weight: bold'>Comments</span> <a name="comments"></a><br/> 
+
+<div class='ipsBox'>
+	<div class='ipsBox_container ipsPad'>
+	     <div class='comment_wrap'>
+	                <script type='text/javascript'>
+	ipb.templates['comment_moderation'] = new Template("<div id='comment_moderate_box' class='ipsFloatingAction' style='display: none'><span class='desc'>With <span id='comment_count'>#{count}</span> checked comments: </span><select name='modOptions' class='input_select' id='commentModAction'><option value='approve'>Approve</option><option value='hide'>Hide</option><option value='unhide'>Unhide</option><option value='delete'>Delete</option></select>&nbsp;&nbsp;<input type='button' class='input_submit' id='submitModAction' value='Go' /></div>");
+	
+	ipb.templates['comment_delete'] = new Template("<h3>Confirm Delete</h3><div class='ipsPad ipsForm_center desc'>Are you sure you want to delete this comment?<br /><br /><input type='button' class='input_submit' id='delPush' onclick='ipb.comments.deleteIt(event)' value='Delete comment now' />");
+	
+	ipb.templates['comment_hide'] = new Template("<form action='#{url}' method='post'><h3>Hide Comment</h3><div class='ipsPad ipsForm_center desc'>This option hides the comment, but moderators may still be able to view it.<br /><br /><input type='text' name='reason' id='hidePop_reason' value='' class='input_text' style='width: 60%' /> <input type='submit' class='input_submit' value='Hide Comment' /></form>");
+</script>
+
+<a id='commentsStart'></a>
+
+<div class='ipsComment_wrap' id='comment_wrap'>
+	</div>
+
+
+<script type='text/javascript'>
+	ipb.global.post_width			= 500;
+	document.observe("dom:loaded", function(){
+		ipb.comments.parentId = 3176;
+		ipb.comments.setData( {"counts":{"commentTotal":0,"thisPageCount":0,"perPage":25,"curStart":0},"settings":{"urls-showParent":"app=ccs&module=pages&section=pages&do=redirect&database=1&record=%s","urls-report":""},"canModerate":false,"fromApp":"ccs-records","thisApp":"ccs","repType":"comment_id","enableRep":true,"autoSaveKey":"comment-ccs_database_comments-3176","baseUrl":"app=ccs&amp;module=pages&amp;section=comments&amp;database=1&amp;record=3176","formUrl":"http:\/\/www.gamedev.net\/index.php?app=ccs&amp;database=1&amp;record=3176","formApp":"ccs","formModule":"pages","formSection":"comments","captcha":"<fieldset id='captcha' class='recaptcha'>\n\t<ul class='ipsForm ipsForm_vertical'>\n\t\t<li class='ipsField'>\n\t\t\t<label class='ipsField_title'>Security Check <span class='ipsForm_required'>*<\/span><\/label>\n\t\t\t<div class='ipsField_content'>\n\t\t\t\t<script type='text\/javascript'>\n\t\t\t\t\t\tvar RecaptchaOptions = { \n\t\t\t\t\t\t\t\t\t\t\t\tlang : 'en',\n\t\t\t\t\t\t\t\t\t\t\t\ttheme : 'clean',\n\t\t\t\t\t\t\t\t\t\t\t\ttabindex: 49\n\t\t\t\t\t\t\t\t\t\t\t\t};\n\t\t\t\t\t<\/script><script type=\"text\/javascript\" src=\"https:\/\/www.google.com\/recaptcha\/api\/challenge?k=6LcpWAMAAAAAAA4klDtDNuDH6LsGgBX5mBoJ3naK&hl=en\"><\/script>\n\t\t\t\t\t<noscript>\n\t\t\t\t\t<iframe src=\"https:\/\/www.google.com\/recaptcha\/api\/noscript?k=6LcpWAMAAAAAAA4klDtDNuDH6LsGgBX5mBoJ3naK&hl=en\" height=\"300\" width=\"500\" frameborder=\"0\"><\/iframe><br\/>\n\t\t\t\t\t<textarea name=\"recaptcha_challenge_field\" rows=\"3\" cols=\"40\"><\/textarea>\n\t\t\t\t\t<input type=\"hidden\" name=\"recaptcha_response_field\" value=\"manual_challenge\"\/>\n\t\t\t\t\t<\/noscript>\n\t\t\t<\/div>\n\t\t<\/li>\n\t<\/ul>\n<\/fieldset>","ajaxSaveUrl":"http:\/\/www.gamedev.net\/index.php?app=ccs&module=ajax&section=comments&do=add&database=1&record=3176","ajaxDeleteUrl":"http:\/\/www.gamedev.net\/index.php?app=ccs&module=ajax&section=comments&do=delete&database=1&record=3176","ajaxModerateUrl":"http:\/\/www.gamedev.net\/index.php?app=ccs&module=ajax&section=comments&do=moderate&database=1&record=3176","ajaxShowEditUrl":"http:\/\/www.gamedev.net\/index.php?app=ccs&module=ajax&section=comments&do=showEdit&database=1&record=3176","ajaxSaveEditUrl":"http:\/\/www.gamedev.net\/index.php?app=ccs&module=ajax&section=comments&do=saveEdit&database=1&record=3176","ajaxFetchReplyUrl":"http:\/\/www.gamedev.net\/index.php?app=ccs&module=ajax&section=comments&do=fetchReply&database=1&record=3176","findLastComment":"http:\/\/www.gamedev.net\/index.php?app=ccs&module=pages&section=pages&do=redirect&database=1&record=3176&comment=_last_"} );
+	});
+</script>
+	     </div>
+	</div>
+</div>
+<br/>
+Note: Please offer only <b>positive</b>, <b>constructive</b> comments - we are looking to promote a positive atmosphere where collaboration is valued above all else.<br/>      
+<br/><br/><br/><br/>
+
+  </div>
+</div>
+
+<script type='text/javascript'>
+
+ipb.vars['image_resize']		= 0;
+ipb.global.post_width			= 500;
+Event.observe( window, 'load', function(){
+	// Resize images
+	$$('.article_body').each( function(elem){
+		ipb.global.findImgs( $( elem ) );
+	});
+});
+</script>
+<script type="text/javascript" src="http://public.gamedev.net/public/js/3rd_party/prettify/prettify.js"></script>
+	<script type='text/javascript' src='http://public.gamedev.net/public/js/3rd_party/prettify/lang-sql.js'></script>
+	<!-- By default we load generic code, php, css, sql and xml/html; load others here if desired -->
+
+	<script type="text/javascript">
+	//<![CDATA[
+		Event.observe( window, 'load', function(e){ prettyPrint() });
+	//]]>
+	</script>
+	
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+jQuery.noConflict();
+</script>
+<script src="http://www.gamedev.net/public/js/3rd_party/highstock/highstock.js"></script>
+<script src="http://www.gamedev.net/public/js/3rd_party/highstock/modules/exporting.js"></script>
+	
+<script type="text/javascript"> 
+function ShowGraph() {
+ 
+ var requrl = ipb.vars['base_url'] + "app=ccs&module=ajax&section=getstats&md5check=" +ipb.vars['secure_hash'] + "&article_id=3176";
+ 
+    jQuery.getJSON(requrl, function(data) {
+        // Create the chart
+        window.chart = new Highcharts.StockChart({
+            chart : {
+                renderTo : 'statgraph'
+            },
+
+            title : {
+                text : 'Daily Article Views'
+            },
+
+            rangeSelector: {
+		        selected: 1
+		    },         
+		    
+	    exporting: {
+		buttons: {
+			exportButton: {
+				enabled: false
+			},
+			printButton: {
+				enabled: false
+			}
+		}
+	    },
+            
+	    navigator : {
+				enabled : false
+			},
+			            
+            series : [{
+                type : 'column',
+                name : 'Daily Views',
+                data : data,
+                dataGrouping: {
+                	enabled: true,
+                	forced: false,
+                	smoothed: false
+                },
+                tooltip: {
+                    valueDecimals: 0
+                }
+            }]
+        });
+    });
+
+
+};
+</script>
+
+
+</div>
+				
+
+				<ol class='breadcrumb bottom ipsList_inline left clearfix clear'>
+															<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<a href='/' itemprop="url">
+										<span itemprop="title">Home</span>
+									</a>
+								</li>
+								
+							
+
+							
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'><b>&raquo;</b></span>
+									 <a href='http://www.gamedev.net/page/index.html/' title='Return to Home' itemprop="url"><span itemprop="title">Home</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'><b>&raquo;</b></span>
+									 <a href='http://www.gamedev.net/page/resources' title='Return to Articles' itemprop="url"><span itemprop="title">Articles</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'><b>&raquo;</b></span>
+									 <a href='http://www.gamedev.net/page/resources/_/technical/' title='Return to Technical' itemprop="url"><span itemprop="title">Technical</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'><b>&raquo;</b></span>
+									 <a href='http://www.gamedev.net/page/resources/_/technical/general-programming/' title='Return to General Programming' itemprop="url"><span itemprop="title">General Programming</span></a>
+								</li>
+								
+							
+
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class='nav_sep'><b>&raquo;</b></span>
+									 <span itemprop="title">Article: Finite State Machines and Regular Expressions</span>
+								</li>
+								
+							
+						</ol>
+
+			</div>
+
+
+			<!-- ::: FOOTER (Change skin, language, mark as read, etc) ::: -->
+
+			<div id='footer_utilities' class='main_width clearfix clear'>
+				<a rel="nofollow" href='#top' id='backtotop' title='Go to top'><span class="gdtop sprite" style="margin-top:5px"></span></a>
+				<ul class='ipsList_inline left'>
+
+					
+							
+					
+						<li>
+							<a rel="nofollow" href='#' id='new_language'>English (USA)</a>							
+							<ul id='new_language_menucontent' class='ipbmenu_content with_checks' style='display: none'>
+								
+									<li class='selected'>
+										<a href="http://www.gamedev.net/index.php?app=ccs&amp;module=pages&amp;section=pages&amp;do=redirect&amp;page=2&amp;k=880ea6a14ea49e853634fbdc5015a024&amp;setlanguage=1&amp;langurlbits=app=ccs&amp;module=pages&amp;section=pages&amp;folder=/resources&amp;page=_&amp;cal_id=&amp;langid=1">English (USA)</a>
+									</li>
+								
+
+									<li >
+										<a href="http://www.gamedev.net/index.php?app=ccs&amp;module=pages&amp;section=pages&amp;do=redirect&amp;page=2&amp;k=880ea6a14ea49e853634fbdc5015a024&amp;setlanguage=1&amp;langurlbits=app=ccs&amp;module=pages&amp;section=pages&amp;folder=/resources&amp;page=_&amp;cal_id=&amp;langid=2">English (USA) (COPY)</a>
+									</li>
+								
+							</ul>
+						</li>
+					
+					<li>
+						<a rel="nofollow" id='mark_all_read' href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=all&amp;k=880ea6a14ea49e853634fbdc5015a024" title='Mark all as read'>Mark Community Read</a>
+						<ul id='mark_all_read_menucontent' class='ipbmenu_content' style='display: none'>
+							
+								<li>
+									
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=forums&amp;k=880ea6a14ea49e853634fbdc5015a024">Forums</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=members&amp;k=880ea6a14ea49e853634fbdc5015a024">Members</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=blog&amp;k=880ea6a14ea49e853634fbdc5015a024">Developer Journals</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=gallery&amp;k=880ea6a14ea49e853634fbdc5015a024">Gallery</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=downloads&amp;k=880ea6a14ea49e853634fbdc5015a024">Downloads</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=ccs&amp;k=880ea6a14ea49e853634fbdc5015a024">Resources</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=nexus&amp;k=880ea6a14ea49e853634fbdc5015a024">Store</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=classifieds&amp;k=880ea6a14ea49e853634fbdc5015a024">Classifieds</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=tracker&amp;k=880ea6a14ea49e853634fbdc5015a024">Tracker</a>
+								</li>
+							
+
+								<li>
+									<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=app&amp;markApp=links&amp;k=880ea6a14ea49e853634fbdc5015a024">Links</a>
+								</li>
+							
+							<li>
+								<a href="http://www.gamedev.net/index.php?app=forums&amp;module=forums&amp;section=markasread&amp;marktype=all&amp;k=880ea6a14ea49e853634fbdc5015a024"><strong>Mark all as read</strong></a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="http://www.gamedev.net/index.php?app=core&amp;module=help" title='View help' rel="help" accesskey='6'>Help</a>
+					</li>				
+				</ul>
+			</div>
+
+<div id="partnercontainer">
+        <div class="partners">
+             <div style="margin-top:6px;">PARTNERS</div>
+             <div class="pNav">
+                <a href="http://www.design3.com/" target="new"><span class="design3_dark_tagline sprite"></span></a>
+             </div>
+             <div class="pNav" style="margin-top:3px; width:130px">
+                <a href="http://www.worldgamingexecutives.com/page/articles-2" target="new"><span class="wge sprite"></span></a>
+
+             </div>
+             <div class="pNav">
+                <a href="http://www.packtpub.com/" target="new"><span class="packt sprite"></span></a>
+             </div>
+<!--
+             <div class="pNav" style='margin: 12px 0 5px 0;width: 220px;'>
+                <a href="http://www.game-connection.com/gameconn/" target="new"><img src="http://public.gamedev.net/images/partners/gameconnection.png"  height="24" width="24" border="0"></a>
+             </div>
+-->
+
+             <div class="pNav" style="margin-top:3px; width:80px">
+                <a href="http://www.chinajoy.net/" target="new"><span class="chinajoy sprite"></span></a>
+</div>
+             <div class="pNav" style="margin: -10px 0 0 50px;">
+                <a href="http://www.assembla.com/plans?affiliate=GameDev" target="new"><span class="assembla-logo-small sprite"></span></a>
+             </div>
+
+<!--
+<div class="pNav" style="margin: -3px 0 0 50px;">
+                <a href="http://gdconf.com/" target="new"><span class="gdc_logo sprite"></span></a>
+             </div>
+-->
+
+             
+
+        </div>
+</div>		              
+             	
+<div id="footercontainer">
+	<div class="footer">
+			<div class="fRef">
+				<a href="http://www.gamedev.net/">
+					<span class="logo_small sprite"></span>
+				</a>
+				<div class="fRef-text">
+					Copyright © 1999-2016 GameDev.Net LLC
+                                        <p><br/>GameDev.net™, the GameDev.net logo, and GDNet™ are trademarks of GameDev.net, LLC<br/></p>
+				</div>
+
+			</div>
+
+			<div class="fNav">
+                        <h5>Navigation</h5>
+                        <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/forum/31-for-beginners/">For Beginners</a></li>
+                        <li><a href="/forum/123-the-technical-side/">Technical</a></li>
+                        <li><a href="/forum/124-the-creative-side/">Creative</a></li>
+                        <li><a href="/forum/133-the-business-side/">Business</a></li>
+                        </ul>
+                        </div>
+
+			<div class="fNav">
+                        <h5>Customer Service</h5>
+                        <ul>
+                        <li><a href="/subscribe/">GDNet+ Subscriptions</a></li>
+                        <li><a href="/classifieds">Job Advertising</a></li>
+                        <li><a href="/info/legal/tos.htm">Terms of Service</a></li>
+                        <li><a href="/info/legal/tos.htm#privacy">Privacy Policy</a></li>
+                        </ul>
+                        </div>
+
+			<div class="fNav">
+                        <h5>Company Info</h5>
+                        <ul>
+                        <li><a href="/info/about">About Us</a></li>
+                        <li><a href="/info/media/">Advertise on Gamedev.net</a></li>
+                        <li><a href="/info/about/contact.html">Contact Us</a></li>
+                        </ul>
+                        </div>
+
+			<div style="clear:both"><!--empty--></div>
+			<!--empty-->
+	</div>
+</div>
+
+			
+			<div><img src='http://www.gamedev.net/index.php?app=core&amp;module=task' alt='' style='border: 0px;height:1px;width:1px;' /></div>
+		</div>
+
+
+
+
+
+				<script type='text/javascript' src='http://www.gamedev.net/public/js/3rd_party/lightbox.js'></script>
+<script type='text/javascript'>
+//<![CDATA[
+	// Lightbox Configuration
+	LightboxOptions = Object.extend({
+	    fileLoadingImage:        'http://www.gamedev.net/public/style_images/master/lightbox/loading.gif',
+	    fileBottomNavCloseImage: 'http://www.gamedev.net/public/style_images/master/lightbox/closelabel.gif',
+	    overlayOpacity: 0.8,   // controls transparency of shadow overlay
+	    animate: true,         // toggles resizing animations
+	    resizeSpeed: 10,        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
+	    borderSize: 10,         //if you adjust the padding in the CSS, you will need to update this variable
+		// When grouping images this is used to write: Image # of #.
+		// Change it for non-english localization
+		labelImage: "Image",
+		labelOf: "of"
+	}, window.LightboxOptions || {});
+/* Watch for a lightbox image and set up our downloadbutton watcher */
+document.observe('click', (function(event){
+    var target = event.findElement('a[rel*="lightbox"]') || event.findElement('area[rel*="lightbox"]') || event.findElement('span[rel*="lightbox"]');
+    if (target) {
+        event.stop();
+        gbl_addDownloadButton();
+    }
+}).bind(this));
+var _to    = '';
+var _last  = '';
+function gbl_addDownloadButton()
+{
+	if ( typeof( ipsLightbox.lightboxImage ) != 'undefined' && ipsLightbox.lightboxImage.src )
+	{
+		if ( _last != ipsLightbox.lightboxImage.src )
+		{
+			if ( ! $('gbl_d') )
+			{
+				$('bottomNav').insert( { top: "<div id='gbl_d' style='text-align:right;padding-bottom:4px;'></div>" } );
+			}
+			
+			$('gbl_d').update( "<a href='"+ ipsLightbox.lightboxImage.src + "' target='_blank'><img src='http://www.gamedev.net/public/style_images/master/lightbox/download-icon.png' /></a>" );
+			
+			_last = ipsLightbox.lightboxImage.src;
+		}
+	}
+	
+	/* Check for init and then keep checking for new image */
+	_to = setTimeout( "gbl_addDownloadButton()", 1000 );
+}
+//]]>
+</script>
+            
+            <div id='inline_login_form' style='display: none'>
+		<form action="https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;do=process" method="post" id='login'>
+				<input type='hidden' name='auth_key' value='880ea6a14ea49e853634fbdc5015a024' />
+				<input type="hidden" name="referer" value="http://www.gamedev.net/page/resources/_/technical/general-programming/finite-state-machines-and-regular-expressions-r3176" />
+				<h3>Sign In</h3>
+				<div class='ipsBox_notice'>
+                <ul class='ipsList_inline'>
+                    <li><a href="https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;do=process&amp;use_google=1&amp;auth_key=880ea6a14ea49e853634fbdc5015a024" class='ipsButton_secondary' id='googleAjax'><img src='http://www.gamedev.net/public/style_extra/signin/login-google-icon.png' alt='Google' /> &nbsp; Use Google</a></li>
+                </ul>
+            </div>
+<script type='text/javascript'>
+  $('googleAjax').observe( 'click', function(e) { 
+if ( $('inline_login_form') )
+{
+$('inline_login_form').hide();
+$('sign_in_popup_inner').hide();
+$('sign_in_popup_close').hide();
+}
+googlePop();
+Event.stop(e);
+
+return false;
+  });
+</script><div class='ipsBox_notice'>
+						<ul class='ipsList_inline'>
+							
+								<li><a href="https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;serviceClick=facebook" class='ipsButton_secondary'><img src="http://www.gamedev.net/public/style_images/master/loginmethods/facebook.png" alt="Facebook" /> &nbsp; Use Facebook</a></li>
+							
+							
+								<li><a href="https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=login&amp;serviceClick=twitter" class='ipsButton_secondary'><img src="http://www.gamedev.net/public/style_images/master/loginmethods/twitter.png" alt="Twitter" /> &nbsp; Use Twitter</a></li>
+							
+							
+							
+						</ul>
+					</div>
+				<br />
+				<div class='ipsForm ipsForm_horizontal'>
+					<fieldset>
+						<ul>
+							<li class='ipsField'>
+								<div class='ipsField_content'>
+									Need an account? <a href="https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=register" title='Register now!'>Register now!</a>
+								</div>
+							</li>
+							<li class='ipsField ipsField_primary'>
+								<label for='ips_username' class='ipsField_title'>Username</label>
+								<div class='ipsField_content'>
+									<input id='ips_username' type='text' class='input_text' name='ips_username' size='30' tabindex='0' />
+								</div>
+							</li>
+							<li class='ipsField ipsField_primary'>
+								<label for='ips_password' class='ipsField_title'>Password</label>
+								<div class='ipsField_content'>
+									<input id='ips_password' type='password' class='input_text' name='ips_password' size='30' tabindex='0' /><br />
+									<a href='https://www.gamedev.net/index.php?app=core&amp;module=global&amp;section=lostpass' title='Retrieve password'>I've forgotten my password</a>
+								</div>
+							</li>
+							<li class='ipsField ipsField_checkbox'>
+								<input type='checkbox' id='inline_remember' checked='checked' name='rememberMe' value='1' class='input_check' tabindex='0' />
+								<div class='ipsField_content'>
+									<label for='inline_remember'>
+										<strong>Remember me</strong><br />
+										<span class='desc lighter'>This is not recommended for shared computers</span>
+									</label>
+								</div>
+							</li>
+							
+								<li class='ipsField ipsField_checkbox'>
+									<input type='checkbox' id='inline_invisible' name='anonymous' value='1' class='input_check' tabindex='0' />
+									<div class='ipsField_content'>
+										<label for='inline_invisible'>
+											<strong>Sign in anonymously</strong><br />
+											<span class='desc lighter'>Don't add me to the active users list</span>
+										</label>
+									</div>
+								</li>
+							
+							
+							<li class='ipsPad_top ipsForm_center desc ipsType_smaller'>
+								<a rel="nofollow" href='http://www.gamedev.net/privacypolicy/'>Privacy Policy</a>
+							</li>
+							
+						</ul>
+					</fieldset>
+					
+					<div class='ipsForm_submit ipsForm_center'>
+						<input type='submit' class='ipsButton' value='Sign In' tabindex='0' />
+					</div>
+				</div>
+			</form>
+	</div>
+	
+		
+<div id="infobar"  style="display:none"><div id="infobarmsg"></div></div>
+<div id="nav_app_ipchat" style="display:none"><a href=""></a></div>
+<!--NOTHINGTOSEEHERE-->
+	</body>
+</html>
