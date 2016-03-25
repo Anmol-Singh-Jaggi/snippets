@@ -8,6 +8,7 @@
 #include <string>
 #include <cstdlib>
 #include <cctype>
+#include <cassert>
 #include "nfa.h"
 #include "subset_construct.h"
 
@@ -328,7 +329,7 @@ int main(int argc, char** argv)
 
     if (my_scanner().peek() != 0)
     {
-        cerr    << "Parse error: unexpected char " << my_scanner().peek() 
+        cerr    << "Parse error: unexpected char " << my_scanner().peek()
                 << " at #" << my_scanner().get_pos() << endl;
         exit(1);
     }
