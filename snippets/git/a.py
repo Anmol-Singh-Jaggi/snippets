@@ -7,7 +7,7 @@ os.system(command)
 dirs = open('dirs.temp').readlines()
 
 for i in dirs:
-    i = "'" + i.strip() + "'"
+    i = "'" + i.strip()[:-1] + "'"
     command = 'cd ' + i + ' && git status'
     print(command)
     os.system(command)
