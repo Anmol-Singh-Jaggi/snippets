@@ -1,0 +1,24 @@
+Create a new repository on Github.
+Execute `git clone <https url of repo>` to make a copy of the repo on your system.
+Move the project's source-code files to the repo directory.
+Execute `git add .`
+Execute `git commit`
+Execute `git push origin master`
+Edit some files in the local repo directory.
+Execute `git add .`
+Execute `git commit`
+Execute `git push origin master`
+Edit some files on Github.
+Execute `git fetch`
+Execute `git status`
+Execute `git pull`
+
+FAQ -:
+
+1. How to set executable bit on files?
+ - By default, Git changes the permissions of all the files to 644. So, we have no other option to manually enter a rectifiying command to set the bit. After `git add <file>`, enter -:
+ 
+git update-index --chmod=+x <file>
+
+NOTE: This can create potential security holes, and is rather laborious. Also, this is not required in 99% of cases. So, think deeply before you do this.
+
