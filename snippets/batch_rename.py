@@ -28,7 +28,7 @@ def main():
     for index, file_name in enumerate(file_name_list):
         new_file_name = process_file_name(file_name, sorted_file_name_list)
         print(str(index + 1) + ") '" + file_name +
-              "'' --> '" + new_file_name + "'")
+              "' --> '" + new_file_name + "'")
         if isfile(join(input_directory_path, new_file_name)):
             print("Error: Target name exists already!!")
             continue
