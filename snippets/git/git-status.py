@@ -11,3 +11,4 @@ for i in dirs:
     command = 'cd ' + i + ' && git status'
     print(command)
     os.system(command)
+    print("\n\n\n")
