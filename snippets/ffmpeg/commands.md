@@ -13,3 +13,13 @@
     #  file '/path/to/file1'
     #  file '/path/to/file2'
     #  file '/path/to/file3'
+
+## Remove a segment of the video
+    # Remove the segment (1500 seconds - 1980 seconds)
+    ffmpeg -i input.mp4 -filter_complex \
+    "[0:v]trim=duration=1500[av]; \
+     [0:a]atrim=duration=1500[aa];\
+     [0:v]trim=start=1980,setpts=PTS-STARTPTS[bv]; \
+     [0:a]atrim=start=1980,asetpts=PTS-STARTPTS[ba];\
+     [av][bv]concat[outv]; [aa][ba]concat=v=0:a=1[outa]" \
+     -map [outv] -map [outa] out.mp4
