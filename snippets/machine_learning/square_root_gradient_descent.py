@@ -14,22 +14,30 @@ def J(x):
 # Derivative of the cost function
 def Jd(x):
     return 4 * x * (x * x - n)
+    # e = 10**-8
+    # return (J(x + e) - J(x - e)) / (2 * e)
 
 
-def gradient_descent(x, alpha=10**-3, iters=10**6, error=10**-4):
-    print(x, J(x))
+def gradient_descent(x, alpha=10**-3, iters=10**6, error=10**-4, debug=False):
+    if debug:
+        print(x, J(x))
     for i in range(iters):
         if J(x) <= error:
             break
         x -= alpha * Jd(x)
-        print(x, J(x))
+        if debug:
+            print(x, J(x))
         # If x becomes negative, it means that
         # the learning rate is not small enough
         if x < 0:
             # Restart the process after making the learning rate smaller
             x = n
             alpha /= 10
+    return x
 
 
+# Let the initial value be the input number itself
 x = n
-gradient_descent(x)
+
+x = gradient_descent(x)
+print(x)
