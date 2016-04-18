@@ -64,7 +64,7 @@ while eps >= 1e-5 && itercount <= itermax
     text(x1, -2, sprintf('x%d', itercount+1), 'color', 'red');
 
     % Print the plot to a file
-    filename = sprintf('output/%05d.jpg', itercount);
+    filename = sprintf('plots/%05d.jpg', itercount);
     print(filename)
 
     % Append the zero to the array of zeroes calculated so far
