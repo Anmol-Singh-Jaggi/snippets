@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>Fuck yes!!</title>
+<script>
+function SubmitRequest()
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', encodeURI('http://localhost:7474/db/data/cypher'));
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            alert(xhr.responseText);
+        }
+        else {
+         alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send(JSON.stringify({query:
+    'match (n:User) return n.userID limit 5'
+    }))
+}
+</script>
+</head>
+<body>
+<input type="button" value="Submit" onclick="SubmitRequest();"/>
+</body>
+</html>
