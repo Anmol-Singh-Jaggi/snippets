@@ -16,7 +16,7 @@
     # The batch version of the above command.
     for file in *.mp4
     do
-       ffmpeg -i "${file}" -vn -acodec copy "audio/${file%.*}.m4a";
+        ffmpeg -i "${file}" -vn -acodec copy "audio/${file%.*}.m4a";
     done
 
 
