@@ -1,0 +1,9 @@
+block_list = []
+block_list.append('facebook')
+block_list.append('fb')
+block_list.append('linkedin')
+block_list.append('github')
+block_list.append('stackoverflow')
+block_list.append('youtube')
+block_list.append('gmail')
+block_list.append('quora')
