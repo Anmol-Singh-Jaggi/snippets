@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 '''
 Generates the original non-indexed version of notes.
 '''

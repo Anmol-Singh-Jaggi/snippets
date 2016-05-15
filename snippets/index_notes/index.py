@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 '''
 A program used for indexing(numbering) exam notes.
 
