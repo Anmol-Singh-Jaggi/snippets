@@ -47,7 +47,7 @@
     ffmpeg -f x11grab -s 1366x768 -framerate 15 -i :0.0 -c:v libx264 -preset veryslow -qp 0 out.mp4
 
 ## Extract frames from video
-    ffmpeg -i in.mp4 output_%04d.png
+    ffmpeg -i in.mp4 images/output_%04d.png
 
 ## Combine frames to video
     ffmpeg -pattern_type glob -framerate 15 -i '*.png' -c:v libx264 -pix_fmt yuv420p -crf 35 -preset veryslow out.mp4
