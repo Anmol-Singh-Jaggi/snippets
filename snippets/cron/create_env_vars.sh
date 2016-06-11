@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # Create a new file containing the values of the environment variables
 # required for cron scripts to work.
 # This script is supposed to be scheduled to run at startup.
