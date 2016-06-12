@@ -1,4 +1,4 @@
-Power off system at low power automatically.
+**Power off system at low power automatically.**
 
 First ensure that you can hibernate non-interactively from cron without sudo:  
  - Execute `sudo cp 'com.0.enable-hibernation-from-cron.pkla' '/etc/polkit-1/localauthority/50-local.d/'`
