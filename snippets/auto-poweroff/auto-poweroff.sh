@@ -3,7 +3,6 @@
 # Notifies the user if the battery is low.
 # Executes some command (like hibernate) on critical battery.
 # This script is supposed to be called from a cron job.
-# Currently works only when scheduled using root cron: `sudo crontab -e`
 # If you change this script's name/path, don't forget to update it in crontab !!
 
 level=$(cat /sys/class/power_supply/BAT1/capacity)
