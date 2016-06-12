@@ -26,7 +26,8 @@ critical_action_percentage=10
 
 
 if [ "${level}" -le ${critical_action_percentage} ]; then
-  systemctl hibernate
+  # sudo is required when running from cron
+  sudo systemctl hibernate
   exit 0
 fi
 

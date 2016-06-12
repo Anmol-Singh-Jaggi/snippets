@@ -1,9 +1,15 @@
 **Power off system at low power automatically.**
 
 First ensure that you can hibernate non-interactively from cron without sudo:  
- - Execute `sudo cp 'com.0.enable-hibernation-from-cron.pkla' '/etc/polkit-1/localauthority/50-local.d/'`
+ - Execute `sudo visudo -f /etc/sudoers.d/custom`.
+ - Enter the following into the buffer:  
 
-Then, schedule it in cron:  
+ ```
+ # Enable hibernation from cron
+ anmol ALL=NOPASSWD: /bin/systemctl hibernate
+ ```
+  
+Then, schedule it via cron:  
  - `chmod +x auto-poweroff.sh`.
  - `crontab -e`
- - Execute each minute - `* * * * * /path/to/auto-poweroff.sh`.
+ - Execute every minute - `* * * * * /path/to/auto-poweroff.sh`.

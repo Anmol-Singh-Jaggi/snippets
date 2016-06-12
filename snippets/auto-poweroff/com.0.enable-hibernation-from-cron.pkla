@@ -1,4 +1,0 @@
-[Enable hibernate to be run via cron]
-Identity=unix-user:*
-Action=org.freedesktop.login1.hibernate;org.freedesktop.login1.hibernate-multiple-sessions
-ResultAny=yes
