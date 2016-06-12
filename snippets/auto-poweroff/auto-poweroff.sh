@@ -19,8 +19,8 @@ fi
 . /home/anmol/.env_vars
 
 low_notif_percentage=20
-critical_notif_percentage=15
-critical_action_percentage=10
+critical_notif_percentage=100
+critical_action_percentage=95
 
 
 if [ "${level}" -le ${critical_action_percentage} ]; then
