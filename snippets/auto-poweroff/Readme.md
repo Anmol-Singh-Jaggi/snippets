@@ -5,5 +5,5 @@ First ensure that you can hibernate non-interactively from cron without sudo:
 
 Then, schedule it in cron:  
  - `chmod +x auto-poweroff.sh`.
- - `>> crontab -e`
+ - `crontab -e`
  - Execute each minute - `* * * * * /path/to/auto-poweroff.sh`.
