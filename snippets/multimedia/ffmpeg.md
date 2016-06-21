@@ -51,3 +51,12 @@
 
 ## Combine frames to video
     ffmpeg -framerate 15 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -crf 35 -preset veryslow out.mp4
+
+
+## Capture audio being played:
+ - Install *pavucontrol*.
+ - Start recording with *ffmpeg*:  
+   `ffmpeg -f pulse -i default output.ogg`
+ - Start *pavucontrol*.
+ - Go to the *Recording* tab and you'll find *'ffmpeg'* or *'Lavf56.15.102'* (or similar) listed there.
+ - Change audio capture from *'Internal Audio Analog Stereo'* to *'Monitor of Internal Audio Analog Stereo'*.
