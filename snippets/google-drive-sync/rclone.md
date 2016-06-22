@@ -1,4 +1,4 @@
-    DIRPATH="/anmol/DTU/Sems/4/ADA"
+    DIRPATH="/anmol/Docs"
 
 ## Upload files from local to remote; doesn't delete remote files not present on local
     rclone copy "/home/anmol/Data${DIRPATH}" "remote:${DIRPATH}" --ignore-size -cn
