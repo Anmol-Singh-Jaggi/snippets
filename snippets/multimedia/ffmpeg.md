@@ -1,6 +1,9 @@
 ## Convert to avi keeping same quality
     ffmpeg -i input.mp4 -codec copy output.avi
 
+## Convert to avi (divX) keeping a decent quality
+    ffmpeg -i input.mp4 -c:v libxvid -qscale:v 6 output.avi
+
 ## Convert audio stream to mp3
     ffmpeg -i input.mp4 -codec:v copy -codec:a libmp3lame output.mp4
 
