@@ -16,7 +16,7 @@ Now, the steps to edit songs in Audacity:
  - Repeat the above operation for all the segments.
  - Delete all the segments (identify them by the surrounding fade-in/fade-out effects).
  - Apply *Split new* to create a new track.
- - Shift the portion after `t1+00:00:15` to the left until it is in sync with the ending of `t1+00:00:15`.
+ - Shift the portion after `t2+00:00:15` to the left until it is in sync with the ending of `t1-00:00:15`.
  - Finally in the end of the song, if it ends abruptly, apply the *Studio Fade out* to the last 30 seconds or so.
  - Export as an mp3 or as an .ogg (quality = 5).
  - **Keep saving the project in between as Audacity hangs too much.**
