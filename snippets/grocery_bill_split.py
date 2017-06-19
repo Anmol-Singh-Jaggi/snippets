@@ -14,6 +14,7 @@ def main():
             # Break on empty line.
             break
         line = line.split()
+        assert(len(line) > 1)
         amounts = line[:-1]
         entities = line[-1]
         amount = sum(float(num) for num in amounts)
