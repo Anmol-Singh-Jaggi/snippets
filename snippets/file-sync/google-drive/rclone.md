@@ -1,8 +1,8 @@
 ```bash
 DIRNAME="Docs"
-DIRPATH="/anmol/${DIRNAME}"
-LOCALPATH="/home/anmol/Data${DIRPATH}"
-REMOTEPATH="remote:${DIRPATH}"
+DIRPATH="anmol/${DIRNAME}"
+LOCALPATH="/home/anmol/Data/${DIRPATH}"
+REMOTEPATH="remote:/${DIRPATH}"
 ```
 
 ## Upload files from local to remote; doesn't delete remote files not present on local
