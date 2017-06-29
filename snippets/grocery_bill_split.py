@@ -24,6 +24,8 @@ def main():
             entity_amount += amount_per_entity
             entity_vs_amount[entity] = entity_amount
     print(entity_vs_amount)
+    total_amount = sum(entity_vs_amount.values())
+    print("Total amount = {}".format(total_amount))
 
 
 if __name__ == '__main__':
