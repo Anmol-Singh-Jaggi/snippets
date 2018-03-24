@@ -79,3 +79,5 @@
         ffmpeg -i "${file}" -c:a libmp3lame -q:a 2 "${folder_with_mp3_files}/${file/.ogg/.mp3}";
     done
 
+## Record screen with sound
+    ffmpeg -f gdigrab -i desktop -framerate 10 -f dshow -i audio="Stereo Mix (Realtek High Definition Audio)" -vcodec libx264 output.mp4
