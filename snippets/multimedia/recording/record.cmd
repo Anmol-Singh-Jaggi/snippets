@@ -1,0 +1,1 @@
+python D:\static\recording\record.py
