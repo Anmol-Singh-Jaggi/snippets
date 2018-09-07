@@ -108,3 +108,10 @@
     ```
     ffmpeg -f gdigrab -i desktop -framerate 10 -f dshow -i audio="Stereo Mix (Realtek High Definition Audio)" -vcodec libx264 output.mp4
     ```
+
+## Download Youtube videos
+    ```
+    youtube-dl -f 137+140 <url of video>
+    137 and 140 are the format codes for 1080p video stream and the 128kbps audio stream respectively.
+    Sometimes webm will have even higher quality. Just execute 'youtube-dl -F <url>' to see all the format options.
+    ```
