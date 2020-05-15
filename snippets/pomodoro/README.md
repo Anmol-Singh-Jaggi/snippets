@@ -11,7 +11,7 @@
 
 # Setup
 
-Execute it manually:
+Execute it manually and run in background:
 ```
 nohup python3 pomodoro.py &!
 ```

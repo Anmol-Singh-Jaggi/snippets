@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-Run using the following command:
+Run in background:
 nohup python3 pomodoro.py &!
 '''
 import multiprocessing as mp
