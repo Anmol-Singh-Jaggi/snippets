@@ -2,7 +2,8 @@
 
 - A python script running in an infinite loop, which will display a dialog on the screen periodically to force you to take breaks.
 - You are supposed to work without distractions for 30 minutes and then take a break for 5 minutes.
-- The script will sleep for 30 minutes if you press `OK` and 5 minutes if you press `Snooze` (helpful if you want to extend the current working session for some reason).
+- The script will sleep for 30 minutes if you press `OK` and 5 minutes if you press `Snooze`.  
+  This can be used as both: a way to time the break period, or to extend the current working session for a short while.
 - The dialog box is intentionally obtrusive and cannot be minimized or hidden until you press a button.
 - It also keeps generating a sound until a button is pressed.
 - To not the see the dialog ever again, press `Finish` to kill the script.
