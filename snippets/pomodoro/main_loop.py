@@ -2,6 +2,9 @@
 import multiprocessing as mp
 import subprocess
 import time
+import os
+import signal
+
 import setproctitle
 
 
@@ -14,8 +17,9 @@ cmd_dialog = cmd_dialog.format(dialog_message, *dialog_buttons, dialog_button_de
 cmd_sound = "afplay /System/Library/Sounds/Tink.aiff"
 cmd_screen = "pmset displaysleepnow"
 
-INTERVAL_MINS=30
+MAIN_LOOP_MINS=25
 SNOOZE_MINS=5
+SCREEN_OFF_SECONDS=15
 
 
 def pkill(process_name):
@@ -49,7 +53,7 @@ def command_make_sound():
 
 def command_screen_off():
     setproctitle.setproctitle(mp.current_process().name)
-    wait_for_secs(20)
+    wait_for_secs(SCREEN_OFF_SECONDS)
     subprocess.run(cmd_screen, shell=True)
 
 
@@ -57,9 +61,11 @@ def process_result(res):
     stdout = res.stdout.decode("utf-8")
     if res.returncode == 0:
         if "Finish" in stdout:
-            pkill('pomodoro')
+            os.kill(os.getppid(), signal.SIGTERM)
+            pkill("pomodoro")
+            exit(0)
         if "OK" in stdout:
-            wait_time_mins = INTERVAL_MINS
+            wait_time_mins = MAIN_LOOP_MINS
         else:
             wait_time_mins = SNOOZE_MINS
     else:
@@ -70,11 +76,12 @@ def process_result(res):
 
 def main_loop():
     setproctitle.setproctitle(mp.current_process().name)
-    wait_time_mins = INTERVAL_MINS
+    wait_time_mins = MAIN_LOOP_MINS
     while True:
         wait_for_mins(wait_time_mins)
         command_make_sound_process = mp.Process(name='pomodoro_make_sound', target=command_make_sound)
         command_make_sound_process.start()
+        # Just comment these 2 lines if you dont want the screen to be turned off.
         command_screen_off_process = mp.Process(name='pomodoro_screen_off', target=command_screen_off)
         command_screen_off_process.start()
         res = subprocess.run(cmd_dialog, shell=True, capture_output=True)

@@ -7,7 +7,7 @@
   <key>ProgramArguments</key>
   <array>
     <string>/usr/local/bin/python3</string>
-    <string>/users/ajaggi/Documents/personal/scripts/pomodoro.py</string>
+    <string>/Users/ajaggi/projects/personal/snippets/snippets/pomodoro/pomodoro.py</string>
   </array>    
   <key>RunAtLoad</key>
   <true/>    
@@ -15,5 +15,7 @@
   <string>/tmp/com.ajaggi.pomodoro.err</string>    
   <key>StandardOutPath</key>
   <string>/tmp/com.ajaggi.pomodoro.out</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/ajaggi/projects/personal/snippets/snippets/pomodoro</string>
 </dict>
 </plist>
