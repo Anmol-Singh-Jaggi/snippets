@@ -14,12 +14,13 @@
 - To not the see the dialog ever again, press `Finish` to kill the script.
 - Right now only supported on Mac.
 
-![screenshot](screenshot-pomodoro.png)
+![screenshot](static/screenshot-pomodoro.png)
 
 # Setup
 
 Execute it manually and run in background:
 ```
+cd src
 nohup python3 pomodoro.py &!
 ```
 
@@ -28,3 +29,9 @@ To make it run automatically at startup:
     - Overwrite `'ajaggi'` with your username.
     - Modify all the directory paths to their correct values.
 2. Copy the plist file to `~/Library/LaunchAgents`.
+
+# Todo
+- Add support for Windows and Linux:
+  - If native screen state change notification observer API is missing, then create one using timer loops.
+  - Find out equivalent commands for playing sound, turning off screen, displaying dialog.
+- Get code reviewed.
