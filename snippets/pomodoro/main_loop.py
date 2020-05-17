@@ -4,6 +4,8 @@ import subprocess
 import time
 import os
 import signal
+import logging
+logging.basicConfig(format='%(levelname)s:%(process)d:%(asctime)s:::%(message)s', datefmt='%d-%b-%y_%H:%M:%S', level=logging.DEBUG)
 
 import setproctitle
 
@@ -61,6 +63,7 @@ def process_result(res):
     stdout = res.stdout.decode("utf-8")
     if res.returncode == 0:
         if "Finish" in stdout:
+            logging.info("Exiting!")
             os.kill(os.getppid(), signal.SIGTERM)
             pkill("pomodoro")
             exit(0)
@@ -70,12 +73,14 @@ def process_result(res):
             wait_time_mins = SNOOZE_MINS
     else:
         # No button was pressed and the dialog timed out.
+        logging.warn('No button pressed!')
         wait_time_mins = SNOOZE_MINS
     return wait_time_mins
 
 
 def main_loop():
     setproctitle.setproctitle(mp.current_process().name)
+    logging.debug('Main loop process started.')
     wait_time_mins = MAIN_LOOP_MINS
     while True:
         wait_for_mins(wait_time_mins)

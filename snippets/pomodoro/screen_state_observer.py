@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import multiprocessing as mp
 import subprocess
+import logging
+logging.basicConfig(format='%(levelname)s:%(process)d:%(asctime)s:::%(message)s', datefmt='%d-%b-%y_%H:%M:%S', level=logging.DEBUG)
 import Foundation
 import AppKit
 from PyObjCTools import AppHelper
@@ -12,17 +14,17 @@ from main_loop import pkill, main_loop
 
 class ScreenStateObserver(AppKit.NSObject):
     def screenOffHandler_(self, _):
-        print('Killing main loop and its children')
+        logging.debug('Killing main loop and its children')
         pkill('pomodoro_main_loop')
         pkill('pomodoro_make_sound')
         pkill('pomodoro_screen_off')
 
     def screenOnHandler_(self, _):
-        print('Starting main loop again')
+        logging.debug('Starting main loop again')
         cmd = "ps -ef | grep 'pomodoro_main_loop' | grep -v grep | awk '{print $2}'"
         res = subprocess.run(cmd, shell=True, capture_output=True)
         if len(res.stdout) > 0:
-            print('Main loop already running!!', file=sys.stderr)
+            logging.warn('Main loop already running!!', file=sys.stderr)
             return
         main_loop_process = mp.Process(name='pomodoro_main_loop', target=main_loop)
         main_loop_process.start()
@@ -34,6 +36,7 @@ def start_screen_state_observer():
     even when laptop is unattended.
     Start the main loop again once screen is on again.
     '''
+    logging.info('ScreenStateObserver process started.')
     setproctitle.setproctitle(mp.current_process().name)
     nc = Foundation.NSDistributedNotificationCenter.defaultCenter()
     screen_state_observer = ScreenStateObserver.new()
