@@ -10,7 +10,7 @@ class MyHandler(PatternMatchingEventHandler):
         super().__init__(patterns=['*.png'], ignore_directories=True, case_sensitive=False) 
   
     def on_created(self, event): 
-        print("Watchdog received created event - % s." % event.src_path)
+        logging.debug("Watchdog received created event - % s." % event.src_path)
         self.compress_image(event.src_path)
     
     def compress_image(self, src_path):
